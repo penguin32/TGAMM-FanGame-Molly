@@ -24,5 +24,5 @@ November 4 2022> remind myself that "circle" should be an ellipse in this isomet
 October 31 2022> player.lua -- implement "touch" for android
                     +added, TouchUpdateID , LeftJoystick love.touchreleased() not working as intended, not functioning as intended(Nov 3 2022)
 
-signing commit test... July 2023 again.... 3rd time now....
+signing commit test... July 2023 again.... 3rd time now....holy 4th time now...
 
