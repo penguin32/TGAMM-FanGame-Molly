@@ -25,4 +25,4 @@ October 31 2022> player.lua -- implement "touch" for android
                     +added, TouchUpdateID , LeftJoystick love.touchreleased() not working as intended, not functioning as intended(Nov 3 2022)
 
 signing commit test... July 2023 again.... 3rd time now....holy 4th time now...
-
+    damn i hate ssh, maybe gpg will work!
