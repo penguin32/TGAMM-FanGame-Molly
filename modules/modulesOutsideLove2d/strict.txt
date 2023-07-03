@@ -1,0 +1,17 @@
+strict" only affect the stuff below where it was required
+	as in...
+
+
+
+--theyre also affected, maybe :D
+
+function love.load()
+
+	--not affected
+	require "strict"
+	--theyre affected
+end
+
+--theyre affected
+
+meh, myself kinda believe it's best to watch out for global variables.
