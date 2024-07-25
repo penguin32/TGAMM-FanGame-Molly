@@ -27,3 +27,6 @@ October 31 2022> player.lua -- implement "touch" for android
 signing commit test... July 2023 again.... 3rd time now....holy 4th time now...
     damn i hate ssh, maybe gpg will work!
 6th time now, i have to add it to the gpg list in github site!!!!
+
+
+July 25 2024> reviewing github clone add commit push ssh etc..
