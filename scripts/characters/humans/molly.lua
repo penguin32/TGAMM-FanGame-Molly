@@ -43,4 +43,13 @@ function Molly:draw()
 		self:PosesDraw(self.skin.torso,nil,nil,nil,self.scale)
 		self:PosesDraw(self.skin.head,nil,nil,nil,self.scale)
 	end
+
+
+	-- July 27 2024 , for SimpleMovement range test during zooming in.
+	-- it gets translated along with the areas when character moves, so find it, goodluck.
+	love.graphics.setColor(0,0,0)
+	love.graphics.circle("line",game.middleX,game.middleY,self.base_dai)
+	love.graphics.circle("line",game.middleX,game.middleY,self.base_damv)
+	love.graphics.setColor(1,1,1)
+
 end

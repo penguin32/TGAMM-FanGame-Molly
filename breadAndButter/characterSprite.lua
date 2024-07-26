@@ -167,3 +167,4 @@ function CharacterSprite:PosesDraw(character_parts,x,y,r,sx,sy,ox,oy,kx,ky)
 		end
 	end
 end
+

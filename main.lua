@@ -1,5 +1,5 @@
 function love.load()
-forZoomingIn = 1.6
+forZoomingIn = 3
 
 --	love.window.setFullscreen(true,"exclusive")
 --	love.window.setFullscreen(true,"desktop")
@@ -16,7 +16,6 @@ forZoomingIn = 1.6
 --Attributes for game.scale() inside game.push() on Environment:draw() in environment.lua, and for evilCursorX/Y on player.lua
 --	specifically I'm talking about this lol Player.GetDistanceOfPointOnScreenWithRespectToPlayerBasePos()
 -- It's too late for me to go back, unless I'm not alone for this problem :(
-	game.badAttemptAtScaling = 1
 --[End]Attributes for game.scale() inside game.push() on environment.lua, and for evilCursorX/Y on player.lua
 
 

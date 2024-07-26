@@ -1,8 +1,8 @@
 Player = {}
 
 function Player.GetDistanceOfPointOnScreenWithRespectToPlayerBasePos()
-	Player.evilCursorX = (cursor.x - game.middleX)*game.badAttemptAtScaling + Player.SelectedCharacter.base_x
-	Player.evilCursorY = (cursor.y - game.middleY)*game.badAttemptAtScaling + Player.SelectedCharacter.base_y
+	Player.evilCursorX = cursor.x - game.middleX + Player.SelectedCharacter.base_x
+	Player.evilCursorY = cursor.y - game.middleY + Player.SelectedCharacter.base_y
 --Named as such due to the fact that it cannot be seen, but play a large role to the cursor function when the player is being translated along with it.
 --OH fuck I'm a genius! XD
 end
@@ -86,19 +86,19 @@ Joystick = { biggerCircle={}, circle={}, d=0, jx=0, jy=0, jd=0, jcos=0, jsin=0, 
 Joystick.biggerCircle = {
 	x=window.width*(0.5/4),
 	y=window.height*(3/4),
-	r=140*game.scale
+	r=140*game.scale/forZoomingIn
 }
 
 Joystick.circle = {
 	x=window.width*(0.5/4),
 	y=window.height*(3/4),
-	r=114*game.scale
+	r=114*game.scale/forZoomingIn
 }
 
 function touches2.leftJoystickHasBeenTapped(v)
 	if v[1] ~= nil then
 		local seeDist = Direction.GetDistance(Joystick.biggerCircle.x,Joystick.biggerCircle.y,v[1],v[2])
-		if seeDist < (Joystick.biggerCircle.r + 300*game.scale) then
+		if seeDist < (Joystick.biggerCircle.r + 300*game.scale/forZoomingIn) then
 			return true
 		else
 			return false
@@ -118,7 +118,7 @@ for k,v in pairs(touches)do
 			self.circle.x,self.circle.y = v[1],v[2]
 			self.d = Direction.GetDistance(self.biggerCircle.x,self.biggerCircle.y,self.circle.x,self.circle.y)
 			cursor.x, cursor.y = game.middleX + self.d*self.jcos*self.jscale, game.middleY + self.d*self.jsin*self.jscale
-		elseif self.jd < (self.biggerCircle.r + 300*game.scale) then
+		elseif self.jd < (self.biggerCircle.r + 300*game.scale/forZoomingIn) then
 			self.circle.x,self.circle.y = self.biggerCircle.x + self.biggerCircle.r*self.jcos, self.biggerCircle.y + self.biggerCircle.r*self.jsin
 			cursor.x, cursor.y = game.middleX + self.biggerCircle.r*self.jcos*self.jscale, game.middleY + self.biggerCircle.r*self.jsin*self.jscale
 		end

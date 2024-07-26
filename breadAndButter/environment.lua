@@ -65,9 +65,8 @@ end
 function Environment.draw()
 	local totalObj = #Environment.objects
 	love.graphics.push()
-	love.graphics.scale(1/game.badAttemptAtScaling,1/game.badAttemptAtScaling)
 	if totalObj > 0 then
-		love.graphics.translate(-Player.SelectedCharacter.base_x + game.middleX*game.badAttemptAtScaling, -Player.SelectedCharacter.base_y + game.middleY*game.badAttemptAtScaling)
+		love.graphics.translate(-Player.SelectedCharacter.base_x + game.middleX, -Player.SelectedCharacter.base_y + game.middleY)
 		for i,v in ipairs(Environment.objects)do
 			if v:is(Circle) or v:is(Rectangle) or v:is(Isometric) then--To see the collider as black.
 				love.graphics.setColor(0,0,0)

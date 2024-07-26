@@ -32,18 +32,13 @@ function Character:MoveAt(dt,timer,direction)
 		self.isChangingPlace = true
 		self.setCollider = false
 		self.base_v = self.temporary_velocity
-		if game.badAttemptAtScaling < 2 then
-			game.badAttemptAtScaling = game.badAttemptAtScaling + dt
-		end
 	cursor.x,cursor.y = game.middleX+Joystick.biggerCircle.r*Joystick.jscale*math.cos(direction),game.middleY+Joystick.biggerCircle.r*Joystick.jscale*math.sin(direction)
 	else
 		self.isChangingPlace = false
 		self.setCollider = true
 		self.base_v = self.current_velocity
 		Player.Keyboard.z = false					--Player.Keyboard
-		if game.badAttemptAtScaling > 1 then
-			game.badAttemptAtScaling = game.badAttemptAtScaling - dt
-		end
 	end
 end
 ]]--
+
