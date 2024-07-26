@@ -3,12 +3,12 @@ SimpleMovement = Object:extend()
 function SimpleMovement:new(base_x,base_y,base_v)
 	self.base_x = base_x or 0	--it dictates actual position of the character
 	self.base_y = base_y or 0
-	self.base_v = base_v or 80
-	self.base_dai = 230*game.scale	--Idle area.
+	self.base_v = base_v or 80*forZoomingIn
+	self.base_dai = (230/forZoomingIn)*game.scale	--Idle area.
 	self.base_cfd = 0		--Use for mouse cursor to game.middleX,game.middleY distance.(forPlayer)
-	self.base_damv = 710*game.scale	--Max distance allowed to limit character's velocity.
+	self.base_damv = (710/forZoomingIn)*game.scale	--Max distance allowed to limit character's velocity.
 	self.base_cos, self.base_sin = 0--Use to calculate for radians to vector of mouse cursor to game.middleX,game.middleY(forPlayer)
-	self.base_da = self.base_damv*1.2 --Max acceleration for a given distance.
+	self.base_da = self.base_damv*1.2*forZoomingIn --Max acceleration for a given distance.
 end
 
 function SimpleMovement:update(dt,animal_x,animal_y,food_x,food_y)

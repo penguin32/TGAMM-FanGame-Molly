@@ -1,5 +1,5 @@
 MainMenu = Object:extend()
-
+local mainMenuScale = game.scale/forZoomingIn
 function MainMenu:new()
 	self.directory = "sprites/title/"
 	self.music = love.audio.newSource(self.directory.."001Title.ogg","stream")
@@ -8,9 +8,9 @@ function MainMenu:new()
 	self.titleImage = {}
 	self.titleImage.i = love.graphics.newImage(self.directory.."intro title.png")
 	self.titleImage.x,self.titleImage.y = game.cartX,game.cartY
-	self.titleImage.w = self.titleImage.i:getWidth()*game.scale
-	self.titleImage.h = self.titleImage.i:getHeight()*game.scale
-	self.titleImage.s = game.scale
+	self.titleImage.w = self.titleImage.i:getWidth()*mainMenuScale
+	self.titleImage.h = self.titleImage.i:getHeight()*mainMenuScale
+	self.titleImage.s = mainMenuScale
 
 	self.animation = {	love.graphics.newImage(self.directory.."intro1.png"),
 				love.graphics.newImage(self.directory.."intro2.png"),
@@ -25,19 +25,19 @@ function MainMenu:new()
 	self.btn.continue.i = love.graphics.newImage(self.directory.."intro Continue.png")
 	self.btn.continue.x = self.titleImage.x + self.titleImage.w*(5.8/10)
 	self.btn.continue.y = self.titleImage.y + self.titleImage.h*(8/10)
-	self.btn.continue.w = self.btn.continue.i:getWidth()*game.scale
-	self.btn.continue.h = self.btn.continue.i:getHeight()*game.scale
-	self.btn.continue.s = game.scale
-	self.btn.continue.sD= game.scale
+	self.btn.continue.w = self.btn.continue.i:getWidth()*mainMenuScale
+	self.btn.continue.h = self.btn.continue.i:getHeight()*mainMenuScale
+	self.btn.continue.s = mainMenuScale
+	self.btn.continue.sD= mainMenuScale
 	self.btn.continue.t = 0
 	self.btn.newGame = {}
 	self.btn.newGame.x = self.titleImage.x + self.titleImage.w*(2.5/10)
 	self.btn.newGame.y = self.titleImage.y + self.titleImage.h*(8/10)
 	self.btn.newGame.i = love.graphics.newImage(self.directory.."intro NewGame.png")
-	self.btn.newGame.w = self.btn.newGame.i:getWidth()*game.scale
-	self.btn.newGame.h = self.btn.newGame.i:getHeight()*game.scale
-	self.btn.newGame.s = game.scale
-	self.btn.newGame.sD= game.scale
+	self.btn.newGame.w = self.btn.newGame.i:getWidth()*mainMenuScale
+	self.btn.newGame.h = self.btn.newGame.i:getHeight()*mainMenuScale
+	self.btn.newGame.s = mainMenuScale
+	self.btn.newGame.sD= mainMenuScale
 	self.btn.newGame.t = 0
 end
 

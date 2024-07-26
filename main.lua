@@ -1,4 +1,6 @@
 function love.load()
+forZoomingIn = 1.6
+
 --	love.window.setFullscreen(true,"exclusive")
 --	love.window.setFullscreen(true,"desktop")
 	window = { width = love.graphics.getWidth(), height = love.graphics.getHeight() }
@@ -8,8 +10,8 @@ function love.load()
 	game = { width = 2048, height = 1427, cartX = 0, cartY = 0, }--Game table is used through all out lua files,
 	game.scale = getScale(window.width,window.height)	     --for configuring sizes ratio... used to compensate with the devicee screen ratio.
 	game.cartX,game.cartY = cartScale(game.cartX,game.cartY)     --Hope it doesn't come to that... maybe grep could help.
-	game.middleX = game.cartX + game.width*game.scale/2
-	game.middleY = game.cartY + game.height*game.scale/2
+	game.middleX = game.cartX + game.width*(game.scale/forZoomingIn)/2
+	game.middleY = game.cartY + game.height*(game.scale/forZoomingIn)/2
 
 --Attributes for game.scale() inside game.push() on Environment:draw() in environment.lua, and for evilCursorX/Y on player.lua
 --	specifically I'm talking about this lol Player.GetDistanceOfPointOnScreenWithRespectToPlayerBasePos()
@@ -23,7 +25,7 @@ function love.load()
 --	love.window.setMode(window.width,window.height,{resizable=false,borderless=true}) --Beware of the ordering of this line of codees lmfao,
 --											  --It messes with the mouse cursor initial position.
 --										--I'm just trying to solve that Android screen issue.
-	font = love.graphics.newFont(34*game.scale)
+	font = love.graphics.newFont(34*(game.scale/forZoomingIn))
 	love.mouse.setPosition(game.middleX,game.middleY)
 --	love.mouse.setRelativeMode(true)--hides mouse cursor and lock mouse inside game
 	Object = require "modules.classic.classic"
@@ -88,10 +90,13 @@ function love.draw()
 	Environment.draw()
 	love.graphics.setBackgroundColor(255,255,255)
 	love.graphics.setColor(0,0,0)
+
+	love.graphics.rectangle("fill",game.middleX,game.middleY,10,10) -- for testing middle
+
 	love.graphics.rectangle("fill",0,0,game.cartX,window.width)
-	love.graphics.rectangle("fill",game.cartX+game.width*game.scale,0,game.cartX,window.width)--This part is fucked on android/because of button tabs
+	love.graphics.rectangle("fill",game.cartX+game.width*(game.scale/forZoomingIn),0,game.cartX,window.width)--This part is fucked on android/because of button tabs
 	love.graphics.rectangle("fill",0,0,window.width,game.cartY)
-	love.graphics.rectangle("fill",0,game.cartY+game.height*game.scale,game.width,game.cartY)
+	love.graphics.rectangle("fill",0,game.cartY+game.height*(game.scale/forZoomingIn),game.width,game.cartY)
 	love.graphics.setColor(1,1,1)
 	local onAndroid = Environment.usingAndroid
 	if onAndroid == true then
@@ -100,11 +105,11 @@ function love.draw()
 end
 
 function getScale(w,h)
-	local sx,sy = w/game.width, h/game.height
+	local sx,sy = w*forZoomingIn/game.width, h*forZoomingIn/game.height
 	if sx <= sy then return sx else return sy end
 end
 
 function cartScale(x,y)
 	local sx,sy = window.width/game.width, window.height/game.height
-	if sx < sy then return x,y+(window.height - game.height*game.scale)/2 else return x+(window.width - game.width*game.scale)/2,y end
+	if sx < sy then return x,y+(window.height - game.height*(game.scale/forZoomingIn))/2 else return x+(window.width - game.width*(game.scale/forZoomingIn))/2,y end
 end

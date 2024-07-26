@@ -87,13 +87,13 @@ function Environment.draw()
 		local who = Player.Who
 		if  who == "Molly" then	--November 6 2022 : Test here!
 			love.graphics.setColor(0,255,0)
-			love.graphics.print("CharPos: "..Player.SelectedCharacter.x,game.cartX+100*game.scale,game.cartY+120*game.scale)
-			love.graphics.print("CharPos: "..Player.SelectedCharacter.y,game.cartX+100*game.scale,game.cartY+160*game.scale)
-			love.graphics.print("evilCursorX: "..Player.evilCursorX,game.cartX+100*game.scale,game.cartY+200*game.scale)
-			love.graphics.print("evilCursorY: "..Player.evilCursorY,game.cartX+100*game.scale,game.cartY+240*game.scale)
-			love.graphics.print("char.base_x: "..Player.SelectedCharacter.base_x,game.cartX+800*game.scale,game.cartY+120*game.scale)
-			love.graphics.print("char.base_y: "..Player.SelectedCharacter.base_y,game.cartX+800*game.scale,game.cartY+160*game.scale)
-			love.graphics.print("Player.Keyboard.z: "..tostring(Player.Keyboard.z),game.cartX+800*game.scale,game.cartY+200*game.scale)
+			love.graphics.print("CharPos: "..Player.SelectedCharacter.x,game.cartX+100*game.scale/forZoomingIn,game.cartY+120*game.scale/forZoomingIn)
+			love.graphics.print("CharPos: "..Player.SelectedCharacter.y,game.cartX+100*game.scale/forZoomingIn,game.cartY+160*game.scale/forZoomingIn)
+			love.graphics.print("evilCursorX: "..Player.evilCursorX,game.cartX+100*game.scale/forZoomingIn,game.cartY+200*game.scale/forZoomingIn)
+			love.graphics.print("evilCursorY: "..Player.evilCursorY,game.cartX+100*game.scale/forZoomingIn,game.cartY+240*game.scale/forZoomingIn)
+			love.graphics.print("char.base_x: "..Player.SelectedCharacter.base_x,game.cartX+800*game.scale/forZoomingIn,game.cartY+120*game.scale/forZoomingIn)
+			love.graphics.print("char.base_y: "..Player.SelectedCharacter.base_y,game.cartX+800*game.scale/forZoomingIn,game.cartY+160*game.scale/forZoomingIn)
+			love.graphics.print("Player.Keyboard.z: "..tostring(Player.Keyboard.z),game.cartX+800*game.scale/forZoomingIn,game.cartY+200*game.scale/forZoomingIn)
 		end
 		if not(cursor.x == game.middleX and cursor.y == game.middleY)then
 			love.graphics.setColor(255,255,0)
