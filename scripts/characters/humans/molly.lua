@@ -35,7 +35,7 @@ function Molly:update(dt)
 end
 
 function Molly:draw()
---	self:DrawSelfColliders()
+	self:DrawSelfColliders()
 	if self.isChangingPlace then
 		--used by function MoveAt() on character.lua
 	else

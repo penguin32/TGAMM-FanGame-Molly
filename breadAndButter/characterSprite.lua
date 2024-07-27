@@ -37,12 +37,12 @@ function CharacterSprite:update(dt,animal_x,animal_y,food_x,food_y)
 	self.xyToBaseXY = Direction.GetDistance(self.x,self.y,self.base_x,self.base_y)
 	self.cos,self.sin = Direction.GetVector(self.x,self.y,self.base_x,self.base_y)
 	if self.xyToBaseXY > self.base_dai and self.xyToBaseXY < self.base_damv then
-		self.x = self.x + self.base_v*self.cos*(self.xyToBaseXY/50)*dt
-		self.y = self.y + self.base_v*self.sin*(self.xyToBaseXY/50)*dt
+		self.x = self.x + self.base_v*self.cos*(self.xyToBaseXY/(50/forZoomingIn))*dt
+		self.y = self.y + self.base_v*self.sin*(self.xyToBaseXY/(50/forZoomingIn))*dt
 		self.isMoving = true
 	elseif self.xyToBaseXY >= self.base_damv then
-		self.x = self.x + self.base_v*self.cos*(self.base_da/50)*dt
-		self.y = self.y + self.base_v*self.sin*(self.base_da/50)*dt
+		self.x = self.x + self.base_v*self.cos*(self.base_da/(50/forZoomingIn))*dt
+		self.y = self.y + self.base_v*self.sin*(self.base_da/(50/forZoomingIn))*dt
 		self.isMoving = true 
 	else
 		self.isMoving = false	
@@ -68,10 +68,10 @@ function CharacterSprite:update(dt,animal_x,animal_y,food_x,food_y)
 -- The purpose of this is for the player's camera, but if an npc would be automated, this code block woudln't even matter :)
 	if self.xyToBaseXY > game.middleX then	--For now June 5 2022, this is how I limit where the camera should be allowed to go,
 		if self.base_x ~= self.x then	-- for the player to be able to see their character.
-			self.base_x = self.base_x - self.base_v*self.base_cos*(self.base_da/50)*dt
+			self.base_x = self.base_x - self.base_v*self.base_cos*(self.base_da/(50/forZoomingIn))*dt
 		end
 		if self.base_y ~= self.y then
-			self.base_y = self.base_y - self.base_v*self.base_sin*(self.base_da/50)*dt
+			self.base_y = self.base_y - self.base_v*self.base_sin*(self.base_da/(50/forZoomingIn))*dt
 		end
 	end
 end
