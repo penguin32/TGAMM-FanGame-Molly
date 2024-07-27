@@ -1,5 +1,5 @@
 function love.load()
-forZoomingIn = 1
+forZoomingIn = 3
 
 --	love.window.setFullscreen(true,"exclusive")
 --	love.window.setFullscreen(true,"desktop")

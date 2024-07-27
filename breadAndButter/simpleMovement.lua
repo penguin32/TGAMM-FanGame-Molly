@@ -15,13 +15,13 @@ function SimpleMovement:new(base_x,base_y,base_v)
 end
 
 function SimpleMovement:update(dt,animal_x,animal_y,food_x,food_y)
-	self.base_cfd = Direction.GetDistance(animal_x,animal_y,food_x,food_y)
+	self.base_cfd = Direction.GetDistance(animal_x,animal_y,food_x,food_y)*forZoomingIn
 	self.base_cos,self.base_sin = Direction.GetVector(animal_x,animal_y,food_x,food_y)
 	if self.base_cfd > self.base_dai and self.base_cfd < self.base_damv then
-		self.base_x = self.base_x + self.base_v*self.base_cos*(self.base_cfd/(50/forZoomingIn))*dt
-		self.base_y = self.base_y + self.base_v*self.base_sin*(self.base_cfd/(50/forZoomingIn))*dt
+		self.base_x = self.base_x + self.base_v*self.base_cos*(self.base_cfd/50)*dt
+		self.base_y = self.base_y + self.base_v*self.base_sin*(self.base_cfd/50)*dt
 	elseif self.base_cfd >= self.base_damv then
-		self.base_x = self.base_x + self.base_v*self.base_cos*(self.base_da/(50/forZoomingIn))*dt
-		self.base_y = self.base_y + self.base_v*self.base_sin*(self.base_da/(50/forZoomingIn))*dt
+		self.base_x = self.base_x + self.base_v*self.base_cos*(self.base_da/50)*dt
+		self.base_y = self.base_y + self.base_v*self.base_sin*(self.base_da/50)*dt
 	end
 end

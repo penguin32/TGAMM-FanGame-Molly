@@ -2,7 +2,7 @@ Molly = Character:extend()
 Molly:implement(HumanColliderFunctions)
 
 function Molly:new()
-	Molly.super.new(self,self.base_x,self.base_y,40,"human","molly",0.3)
+	Molly.super.new(self,self.base_x,self.base_y,80,"human","molly",0.3)
 	self.directory = "sprites/characters/humans/molly/"
 	self.footstep_on_wood = love.audio.newSource(self.directory.."sounds/footstep_on_wood.ogg","stream")
 	self.footstep_on_wood:setLooping(true)
