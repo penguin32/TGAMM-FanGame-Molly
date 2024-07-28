@@ -9,7 +9,7 @@ function Environment.load(level)
 	Environment.bool = 1
 	Environment.usingAndroid = false
 	Environment.touchUpdateUI = false
-	Environment.DevChangeOS = false		---changed by developer only, set "true" for Android, "false" for Desktop use,
+	Environment.DevChangeOS = true		---changed by developer only, set "true" for Android, "false" for Desktop use,
 end						---also the player.lua has couple more steps to follow for this.
 
 function Environment.update(dt)

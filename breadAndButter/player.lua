@@ -8,8 +8,6 @@ function Player.GetDistanceOfPointOnScreenWithRespectToPlayerBasePos()
 end
 
 touches = {}
-touches2 = {}--table for touches separate from finger's IDs because ipairs dont work when looping through table of finger IDs
-			--I hope this makes sense to the future me kek.
 
 function love.touchpressed(id,x,y)
 	touches[id] = {x,y}
@@ -95,22 +93,9 @@ Joystick.circle = {
 	r=114*game.scale/forZoomingIn
 }
 
-function touches2.leftJoystickHasBeenTapped(v)
-	if v[1] ~= nil then
-		local seeDist = Direction.GetDistance(Joystick.biggerCircle.x,Joystick.biggerCircle.y,v[1],v[2])
-		if seeDist < (Joystick.biggerCircle.r + 300*game.scale/forZoomingIn) then
-			return true
-		else
-			return false
-		end
-	else
-		return false
-	end
-end
-
 function Joystick:update()
 for k,v in pairs(touches)do
-	if touches2.leftJoystickHasBeenTapped(v) then
+	if true then
 		self.jx, self.jy = v[1],v[2]
 		self.jcos, self.jsin = Direction.GetVector(self.biggerCircle.x,self.biggerCircle.y,self.jx,self.jy)
 		self.jd = Direction.GetDistance(self.biggerCircle.x,self.biggerCircle.y,self.jx,self.jy)
