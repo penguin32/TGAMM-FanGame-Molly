@@ -20,6 +20,9 @@ end
 
 function love.touchreleased(id,x,y)
 	touches[id] = nil
+	Joystick.jx, Joystick.jy = 0,0
+	cursor.x, cursor.y = game.middleX, game.middleY
+	Joystick.circle.x, Joystick.circle.y = window.width*(0.5/4), window.height*(3/4)
 end
 
 --[[			October 31 2022-November 3 2022
@@ -92,6 +95,7 @@ Joystick.circle = {
 	y=window.height*(3/4),
 	r=114*game.scale/forZoomingIn
 }
+
 
 function Joystick:update()
 for k,v in pairs(touches)do
