@@ -68,6 +68,7 @@ function love.update(dt)
 		local isChangingPlace = Player.isChangingPlace
 		if onAndroid == true then
 			Joystick:update()
+			JoystickR:update()
 		--November 14 2022, Eureka! To fix that cursor.x,cursor.y not settling at the middle, disable a code that also set a value at cursor.x/y
 		else
 			if Player.SelectedCharacter.isChangingPlace then
@@ -100,6 +101,7 @@ function love.draw()
 	local onAndroid = Environment.usingAndroid
 	if onAndroid == true then
 		Joystick:draw()
+		JoystickR:draw()
 	end
 end
 

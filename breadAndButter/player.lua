@@ -23,6 +23,10 @@ function love.touchreleased(id,x,y)
 	Joystick.jx, Joystick.jy = 0,0
 	cursor.x, cursor.y = game.middleX, game.middleY
 	Joystick.circle.x, Joystick.circle.y = window.width*(0.5/4), window.height*(3/4)
+
+    JoystickR.jx, JoystickR.jy = 0,0
+    --need its own cursor.x, cursor.y for interaction options
+	JoystickR.circle.x, JoystickR.circle.y = window.width*(3.5/4), window.height*(3/4)
 end
 
 --[[			October 31 2022-November 3 2022
@@ -98,8 +102,7 @@ Joystick.circle = {
 
 
 function Joystick:update()
-for k,v in pairs(touches)do
-	if true then
+    for k,v in pairs(touches)do
 		self.jx, self.jy = v[1],v[2]
 		self.jcos, self.jsin = Direction.GetVector(self.biggerCircle.x,self.biggerCircle.y,self.jx,self.jy)
 		self.jd = Direction.GetDistance(self.biggerCircle.x,self.biggerCircle.y,self.jx,self.jy)
@@ -111,11 +114,54 @@ for k,v in pairs(touches)do
 			self.circle.x,self.circle.y = self.biggerCircle.x + self.biggerCircle.r*self.jcos, self.biggerCircle.y + self.biggerCircle.r*self.jsin
 			cursor.x, cursor.y = game.middleX + self.biggerCircle.r*self.jcos*self.jscale, game.middleY + self.biggerCircle.r*self.jsin*self.jscale
 		end
-	end
-end
+    end
 end
 
 function Joystick:draw()
+	love.graphics.setColor(0.5,0.5,0.5)
+	love.graphics.circle("line",self.biggerCircle.x,self.biggerCircle.y,self.biggerCircle.r)
+	love.graphics.setColor(0.8,0.8,0.8)
+	love.graphics.circle("fill",self.circle.x,self.circle.y,self.circle.r)
+	love.graphics.setColor(0,1,0)
+	love.graphics.setColor(255,255,255)
+end
+
+
+JoystickR = { biggerCircle={}, circle={}, d=0, jx=0, jy=0, jd=0, jcos=0, jsin=0, jscale=6 }
+
+JoystickR.biggerCircle = {
+	x=window.width*(3.5/4),
+	y=window.height*(3/4),
+	r=140*game.scale/forZoomingIn
+}
+
+JoystickR.circle = {
+	x=window.width*(3.5/4),
+	y=window.height*(3/4),
+	r=114*game.scale/forZoomingIn
+}
+
+function JoystickR:update()
+    for k,v in pairs(touches)do
+		self.jx, self.jy = v[1],v[2]
+		self.jcos, self.jsin = Direction.GetVector(self.biggerCircle.x,self.biggerCircle.y,self.jx,self.jy)
+		self.jd = Direction.GetDistance(self.biggerCircle.x,self.biggerCircle.y,self.jx,self.jy)
+		if self.jd == 0 then
+            --do nothing
+		elseif self.jd < self.biggerCircle.r then
+			self.circle.x,self.circle.y = v[1],v[2]
+			self.d = Direction.GetDistance(self.biggerCircle.x,self.biggerCircle.y,self.circle.x,self.circle.y)
+			--something happens
+			    --need its own cursor.x, cursor.y for interaction options
+
+		elseif self.jd < (self.biggerCircle.r + 300*game.scale/forZoomingIn) then
+			self.circle.x,self.circle.y = self.biggerCircle.x + self.biggerCircle.r*self.jcos, self.biggerCircle.y + self.biggerCircle.r*self.jsin
+			--something happens
+		end
+    end
+end
+
+function JoystickR:draw()
 	love.graphics.setColor(0.5,0.5,0.5)
 	love.graphics.circle("line",self.biggerCircle.x,self.biggerCircle.y,self.biggerCircle.r)
 	love.graphics.setColor(0.8,0.8,0.8)
