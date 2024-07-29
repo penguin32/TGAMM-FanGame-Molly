@@ -33,3 +33,4 @@ July 25 2024> reviewing github clone add commit push ssh etc..
 
 July 29 2024> Just Reviewing and need of signing to verify push.
  tips for dummy/me> $git commit -S -m "to sign commit"
+tick off, "Keep my email address private" on Settings>Emails
