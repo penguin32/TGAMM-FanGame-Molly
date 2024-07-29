@@ -35,3 +35,5 @@ July 29 2024> Just Reviewing and need of signing to verify push.
  tips for dummy/me> $git commit -S -m "to sign commit"
 tick off, "Keep my email address private" on Settings>Emails
 removed the gpg in the settings>keys, retrying to sign commit again
+git config --global user.name blah32
+git config --global user.email blah@gmail.com
