@@ -34,7 +34,7 @@ end
 function CharacterSprite:update(dt,animal_x,animal_y,food_x,food_y)
 	CharacterSprite.super.update(self,dt,animal_x,animal_y,food_x,food_y)
 --Purpose:Character follows base_x,base_y position.
-	self.xyToBaseXY = Direction.GetDistance(self.x,self.y,self.base_x,self.base_y)
+	self.xyToBaseXY = Direction.GetDistance(self.x,self.y,self.base_x,self.base_y)*5
 	self.cos,self.sin = Direction.GetVector(self.x,self.y,self.base_x,self.base_y)
 	if self.xyToBaseXY > self.base_dai and self.xyToBaseXY < self.base_damv then
 		self.x = self.x + self.base_v*self.cos*(self.xyToBaseXY/50)*dt
@@ -48,7 +48,10 @@ function CharacterSprite:update(dt,animal_x,animal_y,food_x,food_y)
 		self.isMoving = false	
 	end
 --Purpose:Animation.
-	self.dir_r = Direction.GetRadian(self.x,self.y,self.base_x,self.base_y)
+	--self.dir_r = Direction.GetRadian(self.x,self.y,self.base_x,self.base_y)
+	--	use 1 line above for npc characters, must fix this.(problem)
+-- July 30 2024 > this line below here is only for player	
+	self.dir_r = Direction.GetRadian(self.x,self.y,Player.evilCursorX,Player.evilCursorY)
 	if self.boolCountingWhere == true then
 		self.currentFrame = self.currentFrame + 10*dt
 		if self.currentFrame >= 4 then

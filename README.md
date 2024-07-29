@@ -1,4 +1,6 @@
 # Molly
+July 30 2024 > Reminder, search for (problem) tag to look for unfinished work.
+
 A fan game.
 Game's diary-> https://mega.nz/folder/B5NklCxb#Oq8xDraLJo3iPZAoZba90g
 There, contains what I'm planning to do for this fan-game, sprites, UML Diagram, Apk for Android and Desktop Executable without needing a loveFramework(plug ang play),
@@ -42,3 +44,6 @@ maybe its the capital letter instead of signingkey its Signingkey
 git config --global user.Signingkey 1243234234
 
 "upload your public signing ssh keys"
+
+
+July 30 2024 > Reminder, search for (problem) tag to look for unfinished work.

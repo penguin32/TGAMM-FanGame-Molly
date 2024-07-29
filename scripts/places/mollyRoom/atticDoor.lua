@@ -46,7 +46,7 @@ function AtticDoor:update(dt)--Don't repeat yourself: November 16 2022, fix in t
 		if Player.Keyboard.z then
 			self.boolMoveAtIsClicked = Player.Keyboard.z
 			if self:CharacterHover() then
-				self.timer = 1.4 --July 27 2024,version of myself, oh so that's just an example time given for testing, that value should varies depending on where it should put the character at some different places.
+				self.timer = 1.2 --July 27 2024,version of myself, oh so that's just an example time given for testing, that value should varies depending on where it should put the character at some different places.
 				Player.SelectedCharacter.base_x,Player.SelectedCharacter.base_y = self.xMiddle,self.yMiddle
 			else
 				self.atticDoor_opacOutOfReach = 1
