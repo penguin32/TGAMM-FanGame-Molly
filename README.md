@@ -40,3 +40,5 @@ git config --global user.email blah@gmail.com
 
 maybe its the capital letter instead of signingkey its Signingkey
 git config --global user.Signingkey 1243234234
+
+"upload your public signing ssh keys"
