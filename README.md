@@ -32,3 +32,4 @@ signing commit test... July 2023 again.... 3rd time now....holy 4th time now...
 July 25 2024> reviewing github clone add commit push ssh etc..
 
 July 29 2024> Just Reviewing and need of signing to verify push.
+ tips for dummy/me> $git commit -S -m "to sign commit"
