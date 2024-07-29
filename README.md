@@ -37,3 +37,6 @@ tick off, "Keep my email address private" on Settings>Emails
 removed the gpg in the settings>keys, retrying to sign commit again
 git config --global user.name blah32
 git config --global user.email blah@gmail.com
+
+maybe its the capital letter instead of signingkey its Signingkey
+git config --global user.Signingkey 1243234234
