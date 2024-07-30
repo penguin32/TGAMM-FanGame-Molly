@@ -24,8 +24,9 @@ function love.touchreleased(id,x,y)
 	cursor.x, cursor.y = game.middleX, game.middleY
 	Joystick.circle.x, Joystick.circle.y = window.width*(0.5/4), window.height*(3/4)
 
-    JoystickR.jx, JoystickR.jy = 0,0
+	JoystickR.jx, JoystickR.jy = 0,0
     --need its own cursor.x, cursor.y for interaction options
+	JoystickR.cursor.x, JoystickR.cursor.y = game.middleX, game.middleY
 	JoystickR.circle.x, JoystickR.circle.y = window.width*(3.5/4), window.height*(3/4)
 end
 
@@ -141,6 +142,11 @@ JoystickR.circle = {
 	r=114*game.scale/forZoomingIn
 }
 
+JoystickR.cursor = {
+	x=0,
+	y=0
+}
+
 function JoystickR:update()
     for k,v in pairs(touches)do
 		self.jx, self.jy = v[1],v[2]
@@ -151,12 +157,14 @@ function JoystickR:update()
 		elseif self.jd < self.biggerCircle.r then
 			self.circle.x,self.circle.y = v[1],v[2]
 			self.d = Direction.GetDistance(self.biggerCircle.x,self.biggerCircle.y,self.circle.x,self.circle.y)
-			--something happens
-			    --need its own cursor.x, cursor.y for interaction options
+
+			 self.cursor.x, self.cursor.y = game.middleX + self.d*self.jcos*self.jscale, game.middleY + self.d*self.jsin*self.jscale
 
 		elseif self.jd < (self.biggerCircle.r + 300*game.scale/forZoomingIn) then
 			self.circle.x,self.circle.y = self.biggerCircle.x + self.biggerCircle.r*self.jcos, self.biggerCircle.y + self.biggerCircle.r*self.jsin
-			--something happens
+
+			self.cursor.x, self.cursor.y = game.middleX + self.biggerCircle.r*self.jcos*self.jscale, game.middleY + self.biggerCircle.r*self.jsin*self.jscale
+
 		end
     end
 end
@@ -167,5 +175,9 @@ function JoystickR:draw()
 	love.graphics.setColor(0.8,0.8,0.8)
 	love.graphics.circle("fill",self.circle.x,self.circle.y,self.circle.r)
 	love.graphics.setColor(0,1,0)
+	love.graphics.setColor(255,255,255)
+
+	love.graphics.setColor(0,1,0.26)
+	love.graphics.circle("fill",self.cursor.x,self.cursor.y,40*game.scale)
 	love.graphics.setColor(255,255,255)
 end
