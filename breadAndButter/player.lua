@@ -28,6 +28,7 @@ function love.touchreleased(id,x,y)
     --need its own cursor.x, cursor.y for interaction options
 	JoystickR.cursor.x, JoystickR.cursor.y = game.middleX, game.middleY
 	JoystickR.circle.x, JoystickR.circle.y = window.width*(3.5/4), window.height*(3/4)
+	JoystickR.drawOptionsBool = false
 end
 
 --[[			October 31 2022-November 3 2022
@@ -128,12 +129,12 @@ function Joystick:draw()
 end
 
 
-JoystickR = { biggerCircle={}, circle={}, d=0, jx=0, jy=0, jd=0, jcos=0, jsin=0, jscale=6 }
+JoystickR = { biggerCircle={}, circle={}, d=0, jx=0, jy=0, jd=0, jcos=0, jsin=0, jscale=6, radian=0, drawOptionsBool=false}
 
 JoystickR.biggerCircle = {
 	x=window.width*(3.5/4),
 	y=window.height*(3/4),
-	r=140*game.scale/forZoomingIn
+	r=140*game.scale/forZoomingIn,
 }
 
 JoystickR.circle = {
@@ -143,8 +144,8 @@ JoystickR.circle = {
 }
 
 JoystickR.cursor = {
-	x=0,
-	y=0
+	x=game.middleX,
+	y=game.middleY
 }
 
 function JoystickR:update()
@@ -155,6 +156,7 @@ function JoystickR:update()
 		if self.jd == 0 then
             --do nothing
 		elseif self.jd < self.biggerCircle.r then
+			self.drawOptionsBool = false
 			self.circle.x,self.circle.y = v[1],v[2]
 			self.d = Direction.GetDistance(self.biggerCircle.x,self.biggerCircle.y,self.circle.x,self.circle.y)
 
@@ -164,6 +166,8 @@ function JoystickR:update()
 			self.circle.x,self.circle.y = self.biggerCircle.x + self.biggerCircle.r*self.jcos, self.biggerCircle.y + self.biggerCircle.r*self.jsin
 
 			self.cursor.x, self.cursor.y = game.middleX + self.biggerCircle.r*self.jcos*self.jscale, game.middleY + self.biggerCircle.r*self.jsin*self.jscale
+			self.radian = Direction.GetRadian(game.middleX,game.middleY,self.cursor.x,self.cursor.y)
+			self.drawOptionsBool = true
 
 		end
     end
@@ -178,6 +182,31 @@ function JoystickR:draw()
 	love.graphics.setColor(255,255,255)
 
 	love.graphics.setColor(0,1,0.26)
-	love.graphics.circle("fill",self.cursor.x,self.cursor.y,40*game.scale)
+	love.graphics.circle("line",self.cursor.x,self.cursor.y,25*game.scale)
 	love.graphics.setColor(255,255,255)
+	self:drawOptions(self.drawOptionsBool)
+end
+
+
+function JoystickR:drawOptions(drawMe)
+	--testing if Direction.Discrete returns are correct
+	local aroundThisCircumference = 550*game.scale/forZoomingIn
+	love.graphics.setColor(0,1,0.26)
+	love.graphics.circle("line",game.middleX,game.middleY,aroundThisCircumference)
+	love.graphics.setColor(1,1,1)
+
+
+	if drawMe == true then
+	local radian = Direction.DiscreteNumber(self.radian)
+		love.graphics.setColor(0.21,0.15,0.11)
+		love.graphics.circle("fill",game.middleX+aroundThisCircumference*math.cos(radian),game.middleY+aroundThisCircumference*math.sin(radian),40*game.scale)
+		love.graphics.setColor(1,1,1)
+	end
+
+
+--	love.graphics.setColor(0.5,0.5,0.5)
+--	love.graphics.circle("fill",x,y,testR)
+--	love.graphics.setColor(1,1,1)
+--	draw a circle with colors appearing indicating discrete directions the right joystick points at
+
 end

@@ -30,3 +30,53 @@ function Direction.GetDistance(animal_x,animal_y,food_x,food_y)
 	vertical_difference = vertical_difference^2
 	return math.sqrt(horizontal_difference + vertical_difference)
 end
+
+function Direction.DiscreteString(radian) --returns direction in discrete value(string type)
+					  --useful for any cursor.x,cursor.y kinda like.
+	if radian > Direction.north_west and radian < Direction.north then
+		return "North slightly west"
+	elseif radian >= Direction.north and radian < Direction.north_east then
+		return "North slightly east"
+	elseif radian >= Direction.adjustedWestNegative and radian <= Direction.north_west then
+		return "North west"
+	elseif radian < Direction.adjustedWestNegative or radian > Direction.adjustedWestPositive then
+		return "West"
+	elseif radian < Direction.adjustedWestPositive and radian >= Direction.south_west then
+		return "South west"
+	elseif radian < Direction.south_west and radian > Direction.south then
+		return "South slightly west"
+	elseif radian <= Direction.south and radian > Direction.south_east then
+		return "South slightly east"
+	elseif radian <= Direction.south_east and radian >= Direction.deg15 then
+		return "South east"
+	elseif radian >= Direction.north_east and radian <= Direction.deg15Neg then
+		return "North east"
+	elseif radian < Direction.deg15 or radian > Direction.deg15Neg then
+		return "East"
+	end
+end
+
+function Direction.DiscreteNumber(radian) --returns direction in discrete value(number type, a vector)
+	local string = Direction.DiscreteString(radian)
+	if string == "North slightly west" then
+		return Direction.north
+	elseif string == "North slightly east" then
+		return Direction.north
+	elseif string == "North west" then
+		return Direction.north_west
+	elseif string == "West" then
+		return Direction.west
+	elseif string == "South west" then
+		return Direction.south_west
+	elseif string == "South slightly west" then
+		return Direction.south
+	elseif string == "South slightly east" then
+		return Direction.south
+	elseif string == "South east" then
+		return Direction.south_east
+	elseif string == "North east" then
+		return Direction.north_east
+	elseif string == "East" then
+		return Direction.east
+	end
+end
