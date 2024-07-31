@@ -11,6 +11,8 @@ touches = {}
 
 function love.touchpressed(id,x,y)
 	touches[id] = {x,y}
+	touches[id][3] = x
+	touches[id][4] = y
 end
 
 function love.touchmoved(id,x,y)
@@ -19,19 +21,24 @@ function love.touchmoved(id,x,y)
 end
 
 function love.touchreleased(id,x,y)
+	local leftTouchDistance = Direction.GetDistance(Joystick.biggerCircle.x,Joystick.biggerCircle.y,touches[id][3], touches[id][4])
+	if leftTouchDistance < Joystick.biggerCircle.r*4 then--just quadruple that for good measure
+		cursor.x, cursor.y = game.middleX, game.middleY
+		Joystick.jx, Joystick.jy = 0,0
+		Joystick.circle.x, Joystick.circle.y = window.width*(0.5/4), window.height*(3/4)
+	end
+		
+
+	local rightTouchDistance = Direction.GetDistance(JoystickR.biggerCircle.x,JoystickR.biggerCircle.y,touches[id][3], touches[id][4])
+	if rightTouchDistance < JoystickR.biggerCircle.r*4 then
+		JoystickR.jx, JoystickR.jy = 0,0
+		JoystickR.cursor.x, JoystickR.cursor.y = game.middleX, game.middleY
+		JoystickR.circle.x, JoystickR.circle.y = window.width*(3.5/4), window.height*(3/4)
+		JoystickR.drawModeBool = false
+		JoystickR:usableModeOnRelease(JoystickR.mode)
+	end
+
 	touches[id] = nil
-	Joystick.jx, Joystick.jy = 0,0
-	cursor.x, cursor.y = game.middleX, game.middleY
-	Joystick.circle.x, Joystick.circle.y = window.width*(0.5/4), window.height*(3/4)
-
-
-
-	JoystickR.jx, JoystickR.jy = 0,0
-    --need its own cursor.x, cursor.y for interaction options aka mode
-	JoystickR.cursor.x, JoystickR.cursor.y = game.middleX, game.middleY
-	JoystickR.circle.x, JoystickR.circle.y = window.width*(3.5/4), window.height*(3/4)
-	JoystickR.drawModeBool = false
-	JoystickR:usableModeOnRelease(JoystickR.mode)
 end
 
 
