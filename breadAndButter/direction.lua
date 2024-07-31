@@ -33,6 +33,8 @@ end
 
 function Direction.DiscreteString(radian) --returns direction in discrete value(string type)
 					  --useful for any cursor.x,cursor.y kinda like.
+					  --Indeed I could simplify this but,
+  --I need this function because,its readable and when drawing sprites, I don't have to write == to some radian to get a conditional statement, all I had to tell is which direction it faces(in String)
 	if radian > Direction.north_west and radian < Direction.north then
 		return "North slightly west"
 	elseif radian >= Direction.north and radian < Direction.north_east then

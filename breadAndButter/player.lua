@@ -24,12 +24,18 @@ function love.touchreleased(id,x,y)
 	cursor.x, cursor.y = game.middleX, game.middleY
 	Joystick.circle.x, Joystick.circle.y = window.width*(0.5/4), window.height*(3/4)
 
+
+
 	JoystickR.jx, JoystickR.jy = 0,0
-    --need its own cursor.x, cursor.y for interaction options
+    --need its own cursor.x, cursor.y for interaction options aka mode
 	JoystickR.cursor.x, JoystickR.cursor.y = game.middleX, game.middleY
 	JoystickR.circle.x, JoystickR.circle.y = window.width*(3.5/4), window.height*(3/4)
-	JoystickR.drawOptionsBool = false
+	JoystickR.drawModeBool = false
+	JoystickR:usableModeOnRelease(JoystickR.mode)
 end
+
+
+
 
 --[[			October 31 2022-November 3 2022
 To switch Android to Desktop,
@@ -50,7 +56,11 @@ function love.mousepressed(mx,my)--Desktop
 	end
 end
 
+
+
+
 Player.Keyboard = {z=false}
+
 function love.keypressed(key)
 	if key == "z" then
 		Player.Keyboard.z = true
@@ -129,7 +139,8 @@ function Joystick:draw()
 end
 
 
-JoystickR = { biggerCircle={}, circle={}, d=0, jx=0, jy=0, jd=0, jcos=0, jsin=0, jscale=6, radian=0, drawOptionsBool=false}
+JoystickR = { biggerCircle={}, circle={}, d=0, jx=0, jy=0, jd=0, jcos=0, jsin=0, jscale=6, discreteRadian=0, drawModeBool=false, mode="none" }
+-- mode="none"      mode, selecting, quiting, saving progress... mode aka options
 
 JoystickR.biggerCircle = {
 	x=window.width*(3.5/4),
@@ -154,20 +165,24 @@ function JoystickR:update()
 		self.jcos, self.jsin = Direction.GetVector(self.biggerCircle.x,self.biggerCircle.y,self.jx,self.jy)
 		self.jd = Direction.GetDistance(self.biggerCircle.x,self.biggerCircle.y,self.jx,self.jy)
 		if self.jd == 0 then
-            --do nothing
+--FIRST CASE of update    do nothing
 		elseif self.jd < self.biggerCircle.r then
-			self.drawOptionsBool = false
+--SECOND CASE of update
+			self.drawModeBool = false
 			self.circle.x,self.circle.y = v[1],v[2]
 			self.d = Direction.GetDistance(self.biggerCircle.x,self.biggerCircle.y,self.circle.x,self.circle.y)
 
 			 self.cursor.x, self.cursor.y = game.middleX + self.d*self.jcos*self.jscale, game.middleY + self.d*self.jsin*self.jscale
+			 self:usableModeOnPress(self.mode)
 
 		elseif self.jd < (self.biggerCircle.r + 300*game.scale/forZoomingIn) then
+--THIRD CASE of update
 			self.circle.x,self.circle.y = self.biggerCircle.x + self.biggerCircle.r*self.jcos, self.biggerCircle.y + self.biggerCircle.r*self.jsin
 
 			self.cursor.x, self.cursor.y = game.middleX + self.biggerCircle.r*self.jcos*self.jscale, game.middleY + self.biggerCircle.r*self.jsin*self.jscale
-			self.radian = Direction.GetRadian(game.middleX,game.middleY,self.cursor.x,self.cursor.y)
-			self.drawOptionsBool = true
+			self.discreteRadian = Direction.DiscreteNumber(Direction.GetRadian(game.middleX,game.middleY,self.cursor.x,self.cursor.y))
+			self:selectingMode(self.discreteRadian)
+			self.drawModeBool = true
 
 		end
     end
@@ -184,11 +199,11 @@ function JoystickR:draw()
 	love.graphics.setColor(0,1,0.26)
 	love.graphics.circle("line",self.cursor.x,self.cursor.y,25*game.scale)
 	love.graphics.setColor(255,255,255)
-	self:drawOptions(self.drawOptionsBool)
+	self:drawMode(self.drawModeBool)
 end
 
-
-function JoystickR:drawOptions(drawMe)
+local colorInd = 1 --color Indication that selectingMode function works
+function JoystickR:drawMode(drawMode)
 	--testing if Direction.Discrete returns are correct
 	local aroundThisCircumference = 550*game.scale/forZoomingIn
 	love.graphics.setColor(0,1,0.26)
@@ -196,17 +211,32 @@ function JoystickR:drawOptions(drawMe)
 	love.graphics.setColor(1,1,1)
 
 
-	if drawMe == true then
-	local radian = Direction.DiscreteNumber(self.radian)
-		love.graphics.setColor(0.21,0.15,0.11)
-		love.graphics.circle("fill",game.middleX+aroundThisCircumference*math.cos(radian),game.middleY+aroundThisCircumference*math.sin(radian),40*game.scale)
+	if drawMode == true then
+		love.graphics.setColor(0.21*colorInd,0.15*colorInd,0.11*colorInd)
+		love.graphics.circle("fill",game.middleX+aroundThisCircumference*math.cos(self.discreteRadian),game.middleY+aroundThisCircumference*math.sin(self.discreteRadian),40*game.scale)
 		love.graphics.setColor(1,1,1)
 	end
+end
 
+function JoystickR:selectingMode(discreteRadian)  --THIRD CASE of update, works only outside of the circle
+	--limited options aka mode are added here and theyre dependent on direction of the right joystick
+	if discreteRadian == Direction.north then
+		colorInd = 2
+		self.mode = "Select" -- Select Mode
+	else
+		colorInd = 1
+		self.mode = "none"
+	end
+end
 
---	love.graphics.setColor(0.5,0.5,0.5)
---	love.graphics.circle("fill",x,y,testR)
---	love.graphics.setColor(1,1,1)
---	draw a circle with colors appearing indicating discrete directions the right joystick points at
+function JoystickR:usableModeOnPress(mode) --SECOND CASE of update, only works on inner radius of that circle
+	if mode == "Select" then
+		Player.Keyboard.z = true
+	end
+end
 
+function JoystickR:usableModeOnRelease(mode) --put on Touch Release function
+	if mode == "Select" then
+		Player.Keyboard.z = false
+	end
 end
