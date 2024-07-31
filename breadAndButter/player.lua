@@ -220,6 +220,11 @@ end
 
 function JoystickR:selectingMode(discreteRadian)  --THIRD CASE of update, works only outside of the circle
 	--limited options aka mode are added here and theyre dependent on direction of the right joystick
+
+	--undo everything first when changing mode
+	self:usableModeOnRelease(self.mode) --plan not set in stone, not ideal way of reseting
+
+
 	if discreteRadian == Direction.north then
 		colorInd = 2
 		self.mode = "Select" -- Select Mode
@@ -235,7 +240,7 @@ function JoystickR:usableModeOnPress(mode) --SECOND CASE of update, only works o
 	end
 end
 
-function JoystickR:usableModeOnRelease(mode) --put on Touch Release function
+function JoystickR:usableModeOnRelease(mode) --put on Touch Release function, and when changing mode
 	if mode == "Select" then
 		Player.Keyboard.z = false
 	end
