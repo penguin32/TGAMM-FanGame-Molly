@@ -48,8 +48,8 @@ function MainMenu:update(dt)
 		self.btn.continue.s = self.btn.continue.s + self.btn.continue.t*0.1
 		self.btn.continue.t = self.btn.continue.t - dt
 		if self.btn.continue.t <= 0 then
-	--	table.remove(Environment.ui,#Environment.ui)
-	--	self.music:stop()
+			--table.remove(Environment.ui,#Environment.ui)
+			--self.music:stop()
 		end
 	else
 		self.btn.continue.s = self.btn.continue.sD

@@ -42,8 +42,7 @@ function love.load()
 	require "scripts.places.typesOfObjects.flooredIsometricObject"
 	require "scripts.objectShapes.rectangle"
 	require "scripts.objectShapes.circle"
-	require "scripts.cardboardbox"		--Just for testing "drawing order",
-						--the hardest part for now, atleast for me :(  -2023 me
+	require "scripts.cardboardbox" --for testing draw order and its opaqueness
 	require "scripts.characters.humans.humanColliderFunctions"
 	require "scripts.mainMenu"
 	require "breadAndButter.direction"
