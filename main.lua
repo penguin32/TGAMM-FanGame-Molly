@@ -71,11 +71,14 @@ function love.load()
 end
 
 function love.update(dt)
- local useTouchUpdateUI = Environment.touchUpdateUI--I'm not sure if I need this touchUpdateUI file :P
-                                                        --ofcourse you need that, touchupdate tells if you're on Android or Desktop.
-        if useTouchUpdateUI == true then
-                TouchUpdateUI()
-        end
+        if Environment.touchUpdateUI == true then  --It tells love.mousepressed(mx,my)
+					  --   to use Touches table(forAndroid) 
+					  --   ...mousepressed(t[1],1[2])...
+                TouchUpdateUI()  -- Function found in player.lua, that holds global functions
+        end --This is redundant,
+	    --	because love.mousepressed(mx,my) also accepts mobile touches as well,
+	    --  but I included this to make sure to use touches={x,y} for when ran in android too,
+	    --  just incase love.mousepressed doesn't work anymore on android.
 
 
 
@@ -84,16 +87,27 @@ function love.update(dt)
 		local onAndroid = Environment.usingAndroid
 		local isChangingPlace = Player.isChangingPlace
 		if onAndroid == true then
-			Joystick:update()
+			Joystick:update()           -- Player's Controls
 			JoystickR:update()
-		--November 14 2022, Eureka! To fix that cursor.x,cursor.y not settling at the middle, disable a code that also set a value at cursor.x/y
 		else
 			if Player.SelectedCharacter.isChangingPlace then
-				--Disables player controls temporarily
-				--Also added on those characters scripts like molly.lua to hide the sprites when changing places.
-				--	but use self.isChangingPlace, so that only that specific object under control by the Player is hidden, while the
-				--	rest of the spawn characters in the future are shown.
+
+
+				--This particular "If statements" Disables player controls temporarily
+				--    No need to mention this but for context, to add that, somewhere in the files,
+				--     also added on those characters scripts like molly.lua to hide 
+				--     the sprites when changing places.
+				--     but use self.isChangingPlace, so that only that specific object 
+				--     under control by the Player is hidden(attic.lua file aka MoveAt())
+				--          player.isChangingPlace,            who is changing place
+				--     , while the
+				--     rest of the spawned characters in the future are shown.
+
+				-- Summary: This is the time when player doesn't have control.
+
+
 			elseif love.mouse.isDown(1) then
+				--  Then back to Player's Controls
 				cursor.x, cursor.y = love.mouse.getPosition()
 			else
 				cursor.x, cursor.y = game.middleX, game.middleY
@@ -104,20 +118,27 @@ end
 
 function love.draw()
 	love.graphics.setFont(font)
+
 	Environment.draw()
+
+
 	love.graphics.setBackgroundColor(255,255,255)
 	love.graphics.setColor(0,0,0)
 
+	love.graphics.setColor(0.5,0,0)
 	love.graphics.rectangle("fill",game.middleX,game.middleY,10,10) -- tells where is game.middleX and middleY
-	love.graphics.rectangle("fill",game.cartX,game.cartY,10,10) -- tells where is game.cartX and cartY
+	love.graphics.rectangle("fill",game.cartX,game.cartY,10,10)	-- tells where is game.cartX and cartY
+	love.graphics.setColor(0,0,0)
 
+									-- Four rectangles below acts as borders.
 	love.graphics.rectangle("fill",0,0,game.cartX,window.width)
-	love.graphics.rectangle("fill",game.cartX+game.width*(game.scale/forZoomingIn),0,game.cartX,window.width)--This part is fucked on android/because of button tabs
+	love.graphics.rectangle("fill",game.cartX+game.width*(game.scale/forZoomingIn),0,game.cartX,window.width)
 	love.graphics.rectangle("fill",0,0,window.width,game.cartY)
 	love.graphics.rectangle("fill",0,game.cartY+game.height*(game.scale/forZoomingIn),game.width,game.cartY)
+
 	love.graphics.setColor(1,1,1)
-	local onAndroid = Environment.usingAndroid
-	if onAndroid == true then
+
+	if Environment.usingAndroid == true then
 		Joystick:draw()
 		JoystickR:draw()
 	end

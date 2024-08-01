@@ -97,6 +97,7 @@ function AtticDoor:MoveAt(dt)
 	cursor.x,cursor.y = game.middleX+Joystick.biggerCircle.r*Joystick.jscale*math.cos(Direction.south_west),game.middleY+Joystick.biggerCircle.r*Joystick.jscale*math.sin(Direction.south_west)
 		self.timer = self.timer - dt
 	elseif self.boolMoveAtIsClicked then
+		cursor.x,cursor.y = game.middleX,game.middleY
 		Player.SelectedCharacter.isChangingPlace = false
 		Player.SelectedCharacter.setCollider = true
 		Player.SelectedCharacter.base_v = Player.SelectedCharacter.current_velocity
