@@ -7,8 +7,8 @@ Environment = { ui={},
 function Environment.load(level)
 	Environment.level = level or 0
 	Environment.bool = 1
-	Environment.usingAndroid = false
 	Environment.touchUpdateUI = false
+	Environment.usingAndroid = false
 	Environment.DevChangeOS = true   ---changed by developer only, set "true" for Android, "false" for Desktop use,
 end						---also the player.lua has couple more steps to follow for this.
 

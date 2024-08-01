@@ -1,32 +1,39 @@
 function love.load()
-forZoomingIn = 2.5
-
---	love.window.setFullscreen(true,"exclusive")
---	love.window.setFullscreen(true,"desktop")
+	forZoomingIn = 2.5	--Is used for attributes of in game objects' like scaling & distances.
+				--multiplied beside game.scale,
+				--    because game.scale take care of the in game objects if the viewport is small,
+				--    multiplying forZoomingIn beside it, takes care which objects we want to scale.
+				--    and dividing game.scale with it, follows the scaling of the viewport,
+				--      which cancels that "Zooming" effect and only
+				--      follows viewport's scaling
 	window = { width = love.graphics.getWidth(), height = love.graphics.getHeight() }
---	window = { width = 411, height = 844 }--A n d r o i d  , beep boop  --- Twas portrait,
---	window = { width = 844, height = 411 }--A n d r o i d  , beep boop, didn't work... damn screen not working as I told.
-
-	game = { width = 2048, height = 1427, cartX = 0, cartY = 0, }--Game table is used through all out lua files,
-	game.scale = getScale(window.width,window.height)	     --for configuring sizes ratio... used to compensate with the devicee screen ratio.
-	game.cartX,game.cartY = cartScale(game.cartX,game.cartY)     --Hope it doesn't come to that... maybe grep could help.
+	game = { width = 2048, height = 1427, cartX = 0, cartY = 0, }
+	game.scale = getScale(window.width,window.height)	     --Is for configuring ratios of in game objects 
+	                        --dependent of the viewport's resolution.
+				--Used to compensate with the devices(Android)'s screen resolution,
+				--pc window/viewport's resolution.
+	game.cartX,game.cartY = cartScale(game.cartX,game.cartY)     --Is used to tell where is the 
+	                        --coordinate(0,0) should be,regardless of the viewport's width & height ratio.
 	game.middleX = game.cartX + game.width*(game.scale/forZoomingIn)/2
-	game.middleY = game.cartY + game.height*(game.scale/forZoomingIn)/2
+	game.middleY = game.cartY + game.height*(game.scale/forZoomingIn)/2     --Is used to tell where is the 
+	                        --middle coordinate of the viewport, regardless of the 
+				--screen/window's width & height ratio.
 
---Attributes for game.scale() inside game.push() on Environment:draw() in environment.lua, and for evilCursorX/Y on player.lua
---	specifically I'm talking about this lol Player.GetDistanceOfPointOnScreenWithRespectToPlayerBasePos()
--- It's too late for me to go back, unless I'm not alone for this problem :(
---[End]Attributes for game.scale() inside game.push() on environment.lua, and for evilCursorX/Y on player.lua
+--[[
+                 game.Scale is use for attributes inside game.push() under Environment:draw() 
+		 in file named environment.lua, and for evilCursorX/Y in file named player.lua.
+    
+		 My Past problem talks about (2023)Player.GetDistanceOfPointOnOnScreenWithRespectToPlayerBasePos(),                  but seems to be not a problem this time for I have fixed the general functionality 
+		 without having thought of that this time this August 1 2024, if problem arised
+		 I should review that function, but for now everything is working as intended
+]]--
 
-
-	cursor = { x = 0, y = 0 }
+	cursor = { x = 0, y = 0 }	--"Mouse Point tool like" for the game.
 	cursor.x,cursor.y = game.middleX,game.middleY
---	love.window.setMode(window.width,window.height,{resizable=false,borderless=true}) --Beware of the ordering of this line of codees lmfao,
---											  --It messes with the mouse cursor initial position.
---										--I'm just trying to solve that Android screen issue.
 	font = love.graphics.newFont(34*(game.scale/forZoomingIn))
 	love.mouse.setPosition(game.middleX,game.middleY)
---	love.mouse.setRelativeMode(true)--hides mouse cursor and lock mouse inside game
+--	love.mouse.setRelativeMode(true)--Hides mouse cursor and lock mouse inside game,
+					--not sure if I want to make an in game mouse.
 	Object = require "modules.classic.classic"
 	require "modules.modulesOutsideLove2d.strict"
 	require "scripts.objectShapes.isometricInteract"
@@ -35,7 +42,8 @@ forZoomingIn = 2.5
 	require "scripts.places.typesOfObjects.flooredIsometricObject"
 	require "scripts.objectShapes.rectangle"
 	require "scripts.objectShapes.circle"
-	require "scripts.cardboardbox"		--just for testing "drawing order" the hardest part for now, atleast for me :(
+	require "scripts.cardboardbox"		--Just for testing "drawing order",
+						--the hardest part for now, atleast for me :(  -2023 me
 	require "scripts.characters.humans.humanColliderFunctions"
 	require "scripts.mainMenu"
 	require "breadAndButter.direction"
@@ -47,20 +55,29 @@ forZoomingIn = 2.5
 	require "scripts.places.explorableArea"
 	require "breadAndButter.environment"
 	require "breadAndButter.player"
---Level's objects scripts below.  Should I be worried about loading all of them at once, or should they be load per each level/room required.
---@Environment.Level = 1
+
+
+--[[
+		Level's objects scripts below.
+		         Should I be worried about loading all of them at once,
+			 or should they be load per each level/room required.
+]]--
+    --@Environment.Level = 1 
 	require "scripts.places.mollyRoom.mollyRoom"
 	require "scripts.places.mollyRoom.atticDoor"
 	require "scripts.places.mcGeeKitchen.mcGeeKitchen"
+
 	Environment.load(0)
 end
 
 function love.update(dt)
-	local useTouchUpdateUI = Environment.touchUpdateUI--I'm not sure if I need this touchUpdateUI file :P
-							--ofcourse you need that, touchupdate tells if you're on Android or Desktop.
-	if useTouchUpdateUI == true then
-		TouchUpdateUI()
-	end
+ local useTouchUpdateUI = Environment.touchUpdateUI--I'm not sure if I need this touchUpdateUI file :P
+                                                        --ofcourse you need that, touchupdate tells if you're on Android or Desktop.
+        if useTouchUpdateUI == true then
+                TouchUpdateUI()
+        end
+
+
 
 	Environment.update(dt)
 	if Player.SelectedCharacter ~= nil then	
@@ -91,7 +108,8 @@ function love.draw()
 	love.graphics.setBackgroundColor(255,255,255)
 	love.graphics.setColor(0,0,0)
 
-	love.graphics.rectangle("fill",game.middleX,game.middleY,10,10) -- for testing middle
+	love.graphics.rectangle("fill",game.middleX,game.middleY,10,10) -- tells where is game.middleX and middleY
+	love.graphics.rectangle("fill",game.cartX,game.cartY,10,10) -- tells where is game.cartX and cartY
 
 	love.graphics.rectangle("fill",0,0,game.cartX,window.width)
 	love.graphics.rectangle("fill",game.cartX+game.width*(game.scale/forZoomingIn),0,game.cartX,window.width)--This part is fucked on android/because of button tabs
