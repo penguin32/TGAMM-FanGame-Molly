@@ -20,7 +20,7 @@ function HumanColliderFunctions:Colliders()--testing phase November 4 2022
 	end
 end
 
---Let's see the colliders of the characters
+-- Let's see the colliders of the characters
 function HumanColliderFunctions:DrawSelfColliders()
 	love.graphics.setColor(0,255,0)
 	love.graphics.circle("line", self.x+self.feetOffsetX, self.y+self.feetOffsetY,self.feetr)
@@ -28,10 +28,15 @@ function HumanColliderFunctions:DrawSelfColliders()
 end
 
 
---[[Functions below are for stationary objects]]--unsure if it would work for a moving objects :D
---	That's because certain functions that does more tasks, their "if's condition doesn't run on real time, when called by another variable "local" within,
---	instead of calling them directly I presume... If I'm planning so, and it didn't work as expected, tweaking local variables to access
---	variables directly called instead, could fix that future problem... but how? -November 5 2022
+--[[Functions below are for stationary objects]]--
+--
+--unsure if it would work for a moving objects :D
+--	That's because certain functions that does more tasks, their "if's condition doesn't
+--	run on real time, when called by another variable "local" within,
+--	instead of calling them directly I presume... If I'm planning so, and it didn't work
+--	as expected, tweaking local variables to access
+--	variables directly called instead, could fix that future problem... but how?
+--	-November 5 2022
 function HumanColliderFunctions:CollideFeetToCircle(obj)
 	local distSelfToObj = Direction.GetDistance(self.x+self.feetOffsetX, self.y+self.feetOffsetY, obj.x, obj.y)
 	if self.feetr + obj.r > distSelfToObj then
@@ -40,13 +45,13 @@ function HumanColliderFunctions:CollideFeetToCircle(obj)
 		self.x = obj.x - cos*sumRadians - self.feetOffsetX
 		self.y = obj.y - sin*sumRadians - self.feetOffsetY
 	end
-end--end of CollideFeetToCircle
+end						    -- End of CollideFeetToCircle
 
 function HumanColliderFunctions:CollideFeetToRectangle(obj)
 	local leftObj = obj.x
 	local rightObj = obj.x + obj.w
---	local topObj = obj.y
---	local botObj = obj.y + obj.h
+						    -- local topObj = obj.y
+						    -- local botObj = obj.y + obj.h
 	local topObj = obj.y + obj.h
 	local botObj = obj.y
 	local middley = obj.y + obj.h/2
@@ -94,14 +99,21 @@ function HumanColliderFunctions:CollideFeetToRectangle(obj)
 		self.x = quadrantx - cos*self.feetr - self.feetOffsetX
 		self.y = quadranty - sin*self.feetr - self.feetOffsetY
 	end
-end--end of CollideFeetToRectangle
+end						    -- End of CollideFeetToRectangle
 
 function HumanColliderFunctions:CollideFeetToIsometric(obj)
-	local yt = self.y + self.feetOffsetY - self.feetr*math.sin(1.0472)  --Short for y-top.
-	local yb = self.y + self.feetOffsetY + self.feetr*math.sin(1.0472)  --..yt,yb similar to xr&xl but it describes the ordinate.
-	local xr = self.x + self.feetOffsetX + self.feetr*math.cos(1.0472)  --Top right side but 45angle,x-coordinate, treating circle(your character feetr hitbox) as an isometric square.
-	local xl = self.x + self.feetOffsetX - self.feetr*math.cos(1.0472)  --Again just, top left side of circle (abscissa) in 45 angle.
-	if xr > obj.x2 and yb > obj.y4 and xl < obj.x3 and yt < obj.y then  --Treating isometric obj like a box first
+	local yt = self.y + self.feetOffsetY - self.feetr*math.sin(1.0472) -- Short for y-top.
+	local yb = self.y + self.feetOffsetY + self.feetr*math.sin(1.0472) -- ..yt,yb similar
+						    -- to xr&xl but it describes the ordinate.
+	local xr = self.x + self.feetOffsetX + self.feetr*math.cos(1.0472) -- Top right side
+						    -- but 45angle,x-coordinate, treating
+						    -- circle(your character feetr hitbox)
+						    -- as an isometric square.
+	local xl = self.x + self.feetOffsetX - self.feetr*math.cos(1.0472) -- Again just, top
+						    -- left side of circle (abscissa) in
+						    -- 45 angle.
+	if xr > obj.x2 and yb > obj.y4 and xl < obj.x3 and yt < obj.y then --Treating
+						    -- isometric obj like a box first
 		local bls = obj.y - obj.ml*(xr - obj.x)  --bottom left side of the object
 		local brs = obj.y - obj.mr*(xl - obj.x)
 		local tls = obj.y2 - obj.mr*(xr - obj.x2)
@@ -110,9 +122,11 @@ function HumanColliderFunctions:CollideFeetToIsometric(obj)
 		local brsx = obj.x - ((yt - obj.y)/obj.mr)
 		local tlsx = obj.x2 - ((yb - obj.y2)/obj.mr)
 		local trsx = obj.x3 - ((yb - obj.y3)/obj.ml)
-		local opp = self.feetr*math.sin(1.0472) --opposite side of circle from the center
+		local opp = self.feetr*math.sin(1.0472) -- opposite side of circle from the
+						    -- center
 		local adj = self.feetr*math.cos(1.0472)
-		if (self.y + self.feetOffsetY > tls and self.y + self.feetOffsetY < brs and self.x + self.feetOffsetX < blsx + obj.rl/2) and (yt < bls) and (xr > blsx) then--bottom left side of an object
+		if (self.y + self.feetOffsetY > tls and self.y + self.feetOffsetY < brs and self.x + self.feetOffsetX < blsx + obj.rl/2) and (yt < bls) and (xr > blsx) then -- bottom left
+						    -- side of an object
 			self.y = bls + opp - self.feetOffsetY
 			self.x = blsx - adj - self.feetOffsetX
 		elseif (self.y + self.feetOffsetY < bls and self.y + self.feetOffsetY > trs and self.x + self.feetOffsetX > brsx - obj.ll/2) and (yt < brs) and (xl < brsx) then--bottom right of an object
@@ -148,7 +162,7 @@ function HumanColliderFunctions:CollideFeetToIsometric(obj)
 		self.x = obj.x4 - cos*self.feetr - self.feetOffsetX
 		self.y = obj.y4 - sin*self.feetr - self.feetOffsetY
 	end
-end--end of CollideFeetToIsometric
+end						    --end of CollideFeetToIsometric
 
 
 --- November 9 2022 : Rely on 4 isometric colliders for now.   __HAS undefine!  runtime error went unnoticed cannot divide by zero, slope problem

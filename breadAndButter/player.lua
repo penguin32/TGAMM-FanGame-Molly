@@ -101,7 +101,7 @@ function Player.Load(Table)
 end
 
 function Player:PlayCharacter(who)
-	if who == "Molly" then--November 6 2022 : Currently tested
+	if who == "Molly" then		-- November 6 2022 : Currently tested
 		self.SelectedCharacter = Molly()
 		self.Who = who
 	end
@@ -127,7 +127,7 @@ function Joystick:update()
 		self.jx, self.jy = v[1],v[2]
 		self.jcos, self.jsin = Direction.GetVector(self.biggerCircle.x,self.biggerCircle.y,self.jx,self.jy)
 		self.jd = Direction.GetDistance(self.biggerCircle.x,self.biggerCircle.y,self.jx,self.jy)
-		if self.jd < self.biggerCircle.r then						--November 3 2022, I couldn't make it untouch, like damn :(
+		if self.jd < self.biggerCircle.r then					
 			self.circle.x,self.circle.y = v[1],v[2]
 			self.d = Direction.GetDistance(self.biggerCircle.x,self.biggerCircle.y,self.circle.x,self.circle.y)
 			cursor.x, cursor.y = game.middleX + self.d*self.jcos*self.jscale, game.middleY + self.d*self.jsin*self.jscale
@@ -149,7 +149,7 @@ end
 
 
 JoystickR = { biggerCircle={}, circle={}, d=0, jx=0, jy=0, jd=0, jcos=0, jsin=0, jscale=6, discreteRadian=0, drawModeBool=false, mode="none" }
--- mode="none"      mode, selecting, quiting, saving progress... mode aka options
+	-- mode="none"      mode, selecting, quiting, saving progress... mode aka options
 
 JoystickR.biggerCircle = {
 	x=window.width*(3.5/4),
@@ -174,9 +174,9 @@ function JoystickR:update()
 		self.jcos, self.jsin = Direction.GetVector(self.biggerCircle.x,self.biggerCircle.y,self.jx,self.jy)
 		self.jd = Direction.GetDistance(self.biggerCircle.x,self.biggerCircle.y,self.jx,self.jy)
 		if self.jd == 0 then
---FIRST CASE of update    do nothing
+	--FIRST CASE of update    do nothing
 		elseif self.jd < self.biggerCircle.r then
---SECOND CASE of update
+	--SECOND CASE of update
 			self.drawModeBool = false
 			self.circle.x,self.circle.y = v[1],v[2]
 			self.d = Direction.GetDistance(self.biggerCircle.x,self.biggerCircle.y,self.circle.x,self.circle.y)
@@ -185,7 +185,7 @@ function JoystickR:update()
 			 self:usableModeOnPress(self.mode)
 
 		elseif self.jd < (self.biggerCircle.r + 300*game.scale/forZoomingIn) then
---THIRD CASE of update
+	--THIRD CASE of update
 			self.circle.x,self.circle.y = self.biggerCircle.x + self.biggerCircle.r*self.jcos, self.biggerCircle.y + self.biggerCircle.r*self.jsin
 
 			self.cursor.x, self.cursor.y = game.middleX + self.biggerCircle.r*self.jcos*self.jscale, game.middleY + self.biggerCircle.r*self.jsin*self.jscale
@@ -211,9 +211,9 @@ function JoystickR:draw()
 	self:drawMode(self.drawModeBool)
 end
 
-local colorInd = 1 --color Indication that selectingMode function works
+local colorInd = 1	 -- Color Indication that selectingMode function works
 function JoystickR:drawMode(drawMode)
-	--testing if Direction.Discrete returns are correct
+		         -- Testing if Direction.Discrete returns are correct
 	local aroundThisCircumference = 550*game.scale/forZoomingIn
 	love.graphics.setColor(0,1,0.26)
 	love.graphics.circle("line",game.middleX,game.middleY,aroundThisCircumference)
@@ -227,11 +227,13 @@ function JoystickR:drawMode(drawMode)
 	end
 end
 
-function JoystickR:selectingMode(discreteRadian)  --THIRD CASE of update, works only outside of the circle
-	--limited options aka mode are added here and theyre dependent on direction of the right joystick
+function JoystickR:selectingMode(discreteRadian)  -- THIRD CASE of update,
+	-- works only outside of the circle
+	-- limited options aka mode are added here and theyre dependent on direction of the
+	-- right joystick
 
-	--undo everything first when changing mode
-	self:usableModeOnRelease(self.mode) --plan not set in stone, not ideal way of reseting
+	-- undo everything first when changing mode
+	self:usableModeOnRelease(self.mode) -- plan not set in stone, not ideal way of reseting
 
 
 	if discreteRadian == Direction.north then
@@ -243,13 +245,15 @@ function JoystickR:selectingMode(discreteRadian)  --THIRD CASE of update, works 
 	end
 end
 
-function JoystickR:usableModeOnPress(mode) --SECOND CASE of update, only works on inner radius of that circle
+function JoystickR:usableModeOnPress(mode) -- SECOND CASE of update, only works on inner
+					   -- radius of that circle
 	if mode == "Select" then
 		Player.Keyboard.z = true
 	end
 end
 
-function JoystickR:usableModeOnRelease(mode) --put on Touch Release function, and when changing mode
+function JoystickR:usableModeOnRelease(mode) -- Put on Touch Release function, and when
+					     -- changing mode
 	if mode == "Select" then
 		Player.Keyboard.z = false
 	end

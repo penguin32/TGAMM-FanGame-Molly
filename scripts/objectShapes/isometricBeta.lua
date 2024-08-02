@@ -1,13 +1,22 @@
-IsometricBeta = Object:extend()--Colliderless, interactable. November 9 2022 : Only effective for smaller spawns of isometricClick objects, for now.
+IsometricBeta = Object:extend() --Colliderless, interactable. November 9 2022 : Only effective
+				-- for smaller spawns of isometricClick objects, for now.
+			-- EXPLAINED in
+	-- scripts/places/typesOfObjects/flooredIsometricObject.lua
+	--
+	--
+--IsometricBeta:implement(IsometricInteract)--This should be implemented on specific class
+--that needs to be interacted(like atticDoor.lua)
+--	Because Isometric.lua can also have those functions but usually those objects don't
+--	need it. Just so it could be consistent.
 
---IsometricBeta:implement(IsometricInteract)--This should be implemented on specific class that needs to be interacted(like atticDoor.lua)
---	Because Isometric.lua can also have those functions but usually those objects don't need it. Just so it could be consistent.
-
-				--..pretty much useless for objects like isometricClick objects with a ratio of a footlong.
+				--..pretty much useless for objects like isometricClick
+				-- objects with a ratio of a footlong.
 				-- Maybe just use circle dumbass.
 function IsometricBeta:new(x,y,ll,rl,scale)
---	self.ox = ox or 0			--This offsets are only used on IsometricClick.update() 	November 10 2022
---	self.oy = oy or 0		-- Have not been used yet, but its purpose was to move the interactive area like from CursorHover()
+--	self.ox = ox or 0	-- This offsets are only used on IsometricClick.update()
+				-- November 10 2022
+--	self.oy = oy or 0	-- Have not been used yet, but its purpose was to move the
+				-- interactive area like from CursorHover()
 	self.sin = math.sin(0.523599)
 	self.cos = math.cos(0.523599)
 	self.mr = self.sin/self.cos

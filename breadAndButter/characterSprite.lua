@@ -2,11 +2,14 @@
 	1.	"fileName.0001.png" Using opentoonz format.
 	2.	Variations are: North, North-East, East, East-South, South.
 	3.	The Image will be flipped in the program.
-	4.	4 animation frames each of those variations. Total of 20 images for each head,torso, and legs.
-	5.	The image sprites parts should have the same value of width & height and when put together like a stack of paper
-			...It should form their selves like a layer.
-			Unless there's some custom sizes like added scarf that goes beyong character sprites or wings, then their animation frames should
-			have the same image width and height(pixels) :)
+	4.	4 animation frames each of those variations. Total of 20 images for each
+			head,torso, and legs.
+	5.	The image sprites parts should have the same value of width & height and
+			when put together like a stack of paper
+		...It should form their selves like a layer.
+		Unless there's some custom sizes like added scarf that goes beyong character
+		sprites or wings, then their animation frames should
+		have the same image width and height(pixels) :)
 
 	This class uses a global variable from a table: game = {}, found at main.lua file.
 	game.middleX,game.middleY referes to the middle part of the game screen.
@@ -18,25 +21,37 @@ CharacterSprite = SimpleMovement:extend()
 function CharacterSprite:new(base_x,base_y,base_v,type_of_sprite,selected_sprite,scale)
 	CharacterSprite.super.new(self,base_x,base_y,base_v)
 	self.skin = LoadSprite.Selection(type_of_sprite,selected_sprite)
-	self.scale = scale or game.scale--Affects sprite's size and its colliders, but colliders from their own lua file.
-	self.x = self.base_x		--Similar to base_x,base_y but this variable are for character's sprites & colliders positions,
-	self.y = self.base_y		-- that would follow the base_x,base_y.
+	self.scale = scale or game.scale -- Affects sprite's size and its colliders, 
+					 --  but colliders from their own lua file.
+	self.x = self.base_x		 -- Similar to base_x,base_y but this variable are
+					 --  for character's sprites & colliders positions,
+	self.y = self.base_y	  	 --  that would follow the base_x,base_y.
 	self.cos = 0
-	self.sin = 0			--Similar to base_cos,base_sin but for character's sprites & colliders to follow base_x,base_y position.
-	self.xyToBaseXY = 0		--Similar to base_cfd, but this distance represents distance of the character to the base_x,base_y position.
-	self.currentFrame = 1		--Purpose:Animation, to cycle through 4 animation frames.
-	self.boolCountingWhere = true	--Purpose:Animation, to cycle through 4 animation frames.
-	self.dir_r = 0			--Purpose:Animation, a variable for the direction in radians of the character following base_x,base_y.
+	self.sin = 0			 -- Similar to base_cos,base_sin but for character's
+					 --  sprites & colliders to follow base_x,
+					 --  base_y position.
+	self.xyToBaseXY = 0		 -- Similar to base_cfd, but this distance represents
+					 --  distance of the character to the base_x,
+					 --  base_y position.
+	self.currentFrame = 1		 -- Purpose:Animation, to cycle through 4 animation
+					 --  frames.
+	self.boolCountingWhere = true	 -- Purpose:Animation, to cycle through 4 animation
+					 --  frames.
+	self.dir_r = 0			 -- Purpose:Animation, a variable for the direction
+					 --  in radians of the character following base_x,
+					 --  base_y.
 	self.scale = self.scale*game.scale
-	self.isMoving = false		--Check if Character is moving, used by the child class.
+	self.isMoving = false		 -- Check if Character is moving, used by the child
+					 --  class.
 
-	--its own velocity copied from the base_v, so that it doesn't move if camera aka base_x base_y is separated
-	--form x and y
+	-- Its own velocity copied from the base_v, so that it doesn't move if
+	--  camera aka base_x base_y is separated
+	--  from x and y
 	self.spriteVelocity = self.base_v
 end
 
 function CharacterSprite:update(dt,animal_x,animal_y,food_x,food_y)
-	local constant = 5 --just tweaking xyToBaseXY
+	local constant = 5 		 -- Just tweaking xyToBaseXY
 
 	CharacterSprite.super.update(self,dt,animal_x,animal_y,food_x,food_y)
 --Purpose:Character follows base_x,base_y position.
@@ -53,8 +68,8 @@ function CharacterSprite:update(dt,animal_x,animal_y,food_x,food_y)
 	else
 		self.isMoving = false	
 	end
---Purpose:Animation.
-	--self.dir_r = Direction.GetRadian(self.x,self.y,self.base_x,self.base_y)
+-- Purpose:Animation.
+	-- self.dir_r = Direction.GetRadian(self.x,self.y,self.base_x,self.base_y)
 	--	use 1 line above for npc characters, must fix this.(problem)
 -- July 30 2024 > this line below here is only for player	
 	self.dir_r = Direction.GetRadian(self.x,self.y,Player.evilCursorX,Player.evilCursorY)
@@ -71,15 +86,17 @@ function CharacterSprite:update(dt,animal_x,animal_y,food_x,food_y)
 			self.currentFrame = 1
 		end
 	end
-			--November 5 2022 : Feels like I should put these on the simpleMovement.lua file instead.
-				--But xyToBaseXY variable is also used by this characterSprite.lua, so let him cook.
---Purpose:Camera limit movements. Focus on the character.
--- The purpose of this is for the player's camera, but if an npc would be automated, this code block woudln't even matter :)
+-- November 5 2022 : Feels like I should put these on the simpleMovement.lua file instead.
+-- But xyToBaseXY variable is also used by this characterSprite.lua, so let him cook.
+-- Purpose:Camera limit movements. Focus on the character.
+--  The purpose of this is for the player's camera, but if an npc would be automated,
+--  this code block woudln't even matter :)
 
-	if self.xyToBaseXY/constant >= self.base_da/forZoomingIn then	--For now June 5 2022, this is how I limit where the camera should be allowed to go,
-		--I should stop character to be walking so maybe the simple solution would be to set its
-		--velocity to zero, that could be the solution all along, to give the character sprite its own
-		--velocity June 1 2024
+	if self.xyToBaseXY/constant >= self.base_da/forZoomingIn then	
+--For now June 5 2022, this is how I limit where the camera should be allowed to go,
+--I should stop character to be walking so maybe the simple solution would be to set its
+--velocity to zero, that could be the solution all along, to give the character sprite its own
+--velocity June 1 2024
 
 		self.spriteVelocity = 0
 		self.base_x = self.base_x - self.cos*self.base_damv*dt
@@ -90,11 +107,11 @@ function CharacterSprite:update(dt,animal_x,animal_y,food_x,food_y)
 	end
 end
 
---[[October 16 2022
+--[[ October 16 2022
 	This function below is ran inside the draw() of the child-class.
 	Example:	Festivia = CharacterSprite:extend()
 			Festivia:draw()
-				--blah blah specific way to draw from the update(), then now here...
+			--blah blah specific way to draw from the update(), then now here...
 				self:PosesDraw(self.skin.legs,r,sx,sy,ox,oy,kx,ky)--will be changed by Festivia:update() dt
 				self:PosesDraw(self.skin.torso,r,sx,sy,ox,oy,kx,ky)
 When calling it there...update()
@@ -103,27 +120,33 @@ When calling it there...update()
 					}This table could be use to changed the properties of the Sprite parts...
 	love.graphics.draw(drawable, x, y, r, sx, sy, ox, oy, kx, ky)
 ]]--
+
+
 function CharacterSprite:PosesDraw(character_parts,x,y,r,sx,sy,ox,oy,kx,ky)
 	x = x or self.x
 	y = y or self.y
-	r = r or 0					--orientation(radians),maybe Direction = {} on direction.lua might be helpful
-							--  havent tried this one, maybe it rotate based on the x,y
-	sx = sx or game.scale				--scales,if you see a -sx, or -sy that just means I flipped that image based on the direction the
-							--	the character is facing.
+	r = r or 0--Orientation(radians),maybe Direction = {} on direction.lua might be helpful
+		  --Haven't tried this one, maybe it rotate based on the x,y
+	sx = sx or game.scale	-- Scales,if you see a -sx, or -sy that just means I flipped
+				--  that image based on the direction the
+				--  the character is facing.
 	sy = sy or sx
-	ox = ox or character_parts[1]:getWidth()/2	--offsets draw image to the left my the middle part of image
-	oy = oy or character_parts[1]:getHeight()	--	  draw image upward by the length of its height
-		--[[		Visually it would look like this:
+	ox = ox or character_parts[1]:getWidth()/2	-- Offsets draw image to the left my
+							--  the middle part of image
+	oy = oy or character_parts[1]:getHeight()	-- Draw image upward by the length of
+							--  its height
+--[[		Visually it would look like this:
 					--------
 					|	|
 					|  :)	|
 					|	|
 					----*---
 					    ^your self.x,self.y
-		]]--
-	kx = kx or 0					--shearing
-	ky = ky or 0--if you change this arguement when called this function, this will also affet other sprites.
-			--updater later... October 17 2022
+]]--
+	kx = kx or 0		-- Shearing
+	ky = ky or 0            -- If you change this arguement when called this function,
+				--  this will also affet other sprites.
+			-- Updater later... October 17 2022
 	if self.xyToBaseXY <= self.base_dai then
 		if self.dir_r > Direction.north_west and self.dir_r < Direction.north then
 			love.graphics.draw(character_parts[17],x,y,r,-sx,sy,ox,oy,kx,ky)

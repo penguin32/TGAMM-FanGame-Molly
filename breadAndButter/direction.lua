@@ -1,7 +1,8 @@
 Direction = {}
---Attributes used for characterSprite.lua : CharacterSprite:draw()
-Direction.east = 0--not used by lua files on breadAndButter Directory, just added so that they're all completed, but may be used on other stuff as well :)
-		--I don't know yet... November 14 2022 see character.lua
+		   -- Attributes used for characterSprite.lua : CharacterSprite:draw()
+Direction.east = 0 -- Not used by lua files on breadAndButter Directory, just added so that
+		   -- they're all completed, but may be used on other stuff as well :)
+		   -- I don't know yet... November 14 2022 see character.lua
 Direction.west = math.pi
 Direction.south_west = 3/4*math.pi
 Direction.south = math.pi/2
@@ -9,9 +10,9 @@ Direction.south_east = math.pi/4
 Direction.north_west = -Direction.south_west
 Direction.north = -Direction.south
 Direction.north_east = -Direction.south_east
-Direction.deg15 = 0.261799 --just an offset for east
+Direction.deg15 = 0.261799 					   -- Just an offset for east
 Direction.deg15Neg = -Direction.deg15
-Direction.adjustedWestNegative = -Direction.west + Direction.deg15 --just an offset for west
+Direction.adjustedWestNegative = -Direction.west + Direction.deg15 -- Just an offset for west
 Direction.adjustedWestPositive = -Direction.adjustedWestNegative
 
 function Direction.GetRadian(animal_x,animal_y,food_x,food_y)
@@ -31,10 +32,12 @@ function Direction.GetDistance(animal_x,animal_y,food_x,food_y)
 	return math.sqrt(horizontal_difference + vertical_difference)
 end
 
-function Direction.DiscreteString(radian) --returns direction in discrete value(string type)
-					  --useful for any cursor.x,cursor.y kinda like.
-					  --Indeed I could simplify this but,
-  --I need this function because,its readable and when drawing sprites, I don't have to write == to some radian to get a conditional statement, all I had to tell is which direction it faces(in String)
+function Direction.DiscreteString(radian) -- Returns direction in discrete value(string type)
+					  -- Useful for any cursor.x,cursor.y kinda like.
+					  -- Indeed I could simplify this but,
+  -- I need this function because,its readable and when drawing sprites, I don't have to 
+  -- write == to some radian to get a conditional statement, all I had to tell is which
+  -- direction it faces(in String)
 	if radian > Direction.north_west and radian < Direction.north then
 		return "North slightly west"
 	elseif radian >= Direction.north and radian < Direction.north_east then
@@ -58,7 +61,8 @@ function Direction.DiscreteString(radian) --returns direction in discrete value(
 	end
 end
 
-function Direction.DiscreteNumber(radian) --returns direction in discrete value(number type, a vector)
+function Direction.DiscreteNumber(radian) -- Returns direction in discrete
+					  -- value(number type, a vector)
 	local string = Direction.DiscreteString(radian)
 	if string == "North slightly west" then
 		return Direction.north

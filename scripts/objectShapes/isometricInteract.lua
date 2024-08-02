@@ -1,5 +1,9 @@
 IsometricInteract = Object:extend()--Colliderless, interactable. November 9 2022 : Only effective for smaller spawns of isometricClick objects, for now.
 				--..pretty much useless for objects like isometricClick objects with a ratio of a footlong.
+		--EXPLAINED IN 
+	-- scripts/places/typeOfObjects/flooredIsometricObject.lua
+	--
+	--
 				-- Maybe just use circle dumbass.
 --[[				
 function IsometricClick:new(x,y,ll,rl,scale,ox,oy)

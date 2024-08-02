@@ -1,16 +1,17 @@
-LoadSprite = { --List of available sprites, only png.
-	--sprites/characters/humans
+LoadSprite = { -- List of available sprites, only png.
+	-- sprites/characters/humans
 	--	head
 	--	torso
 	--	legs
-	--	items, dumbass just give it a ui, You don't want to count all the sands in the world.
+	--	items, dumbass just give it a ui,
+	--	You don't want to count all the sands in the world.
 	defaultTest = "sprites/characters/humans/molly"
 
 	--sprites/objects/table  -example
 }
 
 function LoadSprite.Selection(type_of_sprite,selected_sprite)
-	--type_of_sprite would be based on the table to be return
+	-- Type_of_sprite would be based on the table to be return
 	if type_of_sprite == "human" then
 		local human_sprite = {
 			head = {},
