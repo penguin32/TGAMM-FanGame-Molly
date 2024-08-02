@@ -9,6 +9,7 @@ end
 function Circle:update(dt)--Exist to stay consistent with Environment.update(dt) loops
 end
 
-function Circle:draw()--just for testing... see collision shape
+function Circle:draw()
+	-- Just for testing... see collision shape.
 	love.graphics.circle("line", self.x, self.y, self.r)
 end

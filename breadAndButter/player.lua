@@ -3,8 +3,8 @@ Player = {}
 function Player.GetDistanceOfPointOnScreenWithRespectToPlayerBasePos()
 	Player.evilCursorX = cursor.x - game.middleX + Player.SelectedCharacter.base_x
 	Player.evilCursorY = cursor.y - game.middleY + Player.SelectedCharacter.base_y
---Named as such due to the fact that it cannot be seen, but play a large role to the cursor function when the player is being translated along with it.
---OH fuck I'm a genius! XD
+	-- Named as such due to the fact that it cannot be seen, but play a large role to the
+	-- cursor function when the player is being translated along with it.
 end
 
 touches = {}
@@ -22,7 +22,8 @@ end
 
 function love.touchreleased(id,x,y)
 	local leftTouchDistance = Direction.GetDistance(Joystick.biggerCircle.x,Joystick.biggerCircle.y,touches[id][3], touches[id][4])
-	if leftTouchDistance < Joystick.biggerCircle.r*4 then--just quadruple that for good measure
+	if leftTouchDistance < Joystick.biggerCircle.r*4 then	-- Just quadruple that for
+								-- good measure.
 		cursor.x, cursor.y = game.middleX, game.middleY
 		Joystick.jx, Joystick.jy = 0,0
 		Joystick.circle.x, Joystick.circle.y = window.width*(0.5/4), window.height*(3/4)
@@ -45,10 +46,11 @@ end
 
 
 --[[			October 31 2022-November 3 2022
-To switch Android to Desktop,
+	To switch Android to Desktop,
 			In this file,  uncomment
 		love.mousepressed(mx,my) for Desktop version.
-		then on environment.lua, set a field on environment.load(), named "dev" somthing like that , and set that one, to false.
+	Then on environment.lua, set a field on environment.load(), named "dev" something like
+	that , and set that one, to false.
 			that's all..
 ]]--
 

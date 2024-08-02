@@ -11,6 +11,7 @@ end
 function Rectangle:update(dt)--Exist to stay consistent with Environment.update(dt) loops
 end
 
-function Rectangle:draw()--just for testing... see collision shape
+function Rectangle:draw()
+	-- Just for testing... see collision shape.
 	love.graphics.rectangle("line", self.x, self.y, self.w, self.h)
 end

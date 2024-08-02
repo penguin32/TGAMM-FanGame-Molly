@@ -1,4 +1,9 @@
-ExplorableArea = Object:extend()--They are always drawn first in-order, Environment.SortObjects()
+ExplorableArea = Object:extend()     --They are always drawn first in-order,
+				     --Environment.SortObjects()
+				     --Objects inheriting this are drawn first,
+				     --They're the grass, bathroom tiles, etc..
+				     --  of any game levels.
+				     --In a shape of Isometric Box.
 
 function ExplorableArea:new(x,y,ll,rl,scale,floor)
 	self.sin = math.sin(0.523599)
@@ -22,7 +27,10 @@ function ExplorableArea:update(dt)--Exist to stay consistent with Environment.up
 end
 
 function ExplorableArea:draw()
+
+	--To see the outline of the walkable area as an example, in level 1
+	--Not really needed and they're off centered due to varying object's width,height.
 	love.graphics.setColor(0,0,1)
-	love.graphics.polygon("line",self.x2,self.y2,self.x,self.y,self.x3,self.y3,self.x4,self.y4)--just for testing... see collision shape
+	love.graphics.polygon("line",self.x2,self.y2,self.x,self.y,self.x3,self.y3,self.x4,self.y4)
 	love.graphics.setColor(1,1,1,1)
 end

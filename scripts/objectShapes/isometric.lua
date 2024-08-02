@@ -21,7 +21,8 @@ end
 function Isometric:update(dt)--Exist to stay consistent with Environment.update(dt) loops
 end
 
-function Isometric:draw()--just for testing... see collision shape
+function Isometric:draw()
+	-- Just for testing... see collision shape.
 	love.graphics.polygon("line",self.x2,self.y2,self.x,self.y,self.x3,self.y3,self.x4,self.y4)
 end
 

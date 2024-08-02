@@ -1,7 +1,3 @@
---An Isometric but prone to colliderFunctions "any moving objects" with humanColliderFunctions.lua implemented on it.
---
---But for now, sharing sorting-order function with Isomtric, breaks the game. so I'll just append something at then end, FOR NOW. :(
---
 IsometricBeta = Object:extend()--Colliderless, interactable. November 9 2022 : Only effective for smaller spawns of isometricClick objects, for now.
 
 --IsometricBeta:implement(IsometricInteract)--This should be implemented on specific class that needs to be interacted(like atticDoor.lua)
@@ -40,10 +36,11 @@ end
 function IsometricBeta:update(dt)--Exist to stay consistent with Environment.update(dt) loops
 end
 
-function IsometricBeta:draw()--just for testing... see interactable shape
---	love.graphics.setColor(0,0,0)
+function IsometricBeta:draw()
+	--just for testing... see interactable shape
+	love.graphics.setColor(1,0,0)
 	love.graphics.polygon("line",self.x2,self.y2,self.x,self.y,self.x3,self.y3,self.x4,self.y4)
 	love.graphics.circle("line", self.xMiddle,self.yMiddle,20*game.scale)
---	love.graphics.setColor(255,255,255)
+	love.graphics.setColor(255,255,255)
 end
 
