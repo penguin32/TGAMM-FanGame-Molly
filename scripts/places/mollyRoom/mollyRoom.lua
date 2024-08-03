@@ -9,8 +9,6 @@ function MollyRoom:new(x,y,ll,rl,scale)
 	self.walls_ox = self.walls:getWidth()/2 - 100
 	self.walls_oy = self.walls:getHeight() + 200
 					-- No need game.scale
-					-- I'm scaling it as a whole
-					-- (width - 100)*game.scale
 				-- love.graphics.draw(game.scale) scales it for you.
 
 
