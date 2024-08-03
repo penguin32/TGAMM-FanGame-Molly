@@ -12,20 +12,23 @@ function AtticDoor:new(x,y,ll,rl,scale)
 	self.atticDoor_opacOutOfReach = 0
 	self.atticDoor_showOutOfReachMessage = 0
 	self.boolMoveAtIsClicked = false
+	self.wasInsideIsometricBox = false
 end
 
 function AtticDoor:update(dt)
-	if self:CursorHover() then
-		if Player.Keyboard.z and not self.boolMovedAtIsClicked then
-			self.boolMoveAtIsClicked = Player.Keyboard.z
-			if self:CharacterHover() then
-				self.timer = 1.2
-				Player.SelectedCharacter.base_x,Player.SelectedCharacter.base_y = self.xMiddle,self.yMiddle
-			else
-				self.atticDoor_opacOutOfReach = 1
-				self.atticDoor_showOutOfReachMessage = 2
-			end
+	if self:CursorHover() and Player.Keyboard.z then
+		self.boolMoveAtIsClicked = Player.Keyboard.z
+		if self.boolMoveAtIsClicked and self:CharacterHover() then
+			self.wasInsideIsometricBox = true
+			self.timer = 1.2
+			Player.SelectedCharacter.base_x,Player.SelectedCharacter.base_y = self.xMiddle,self.yMiddle
+		else
+			self.wasInsideIsometricBox = false
+			self.atticDoor_opacOutOfReach = 1
+			self.atticDoor_showOutOfReachMessage = 2
 		end
+		self.atticDoor_opac = 1
+	elseif self:CursorHover() then
 		self.atticDoor_opac = 1
 	else
 		self.atticDoor_opac = 0
@@ -57,11 +60,11 @@ function AtticDoor:MoveAt(dt)
 		Player.SelectedCharacter.base_v = Player.SelectedCharacter.temporary_velocity
 	cursor.x,cursor.y = game.middleX+Joystick.biggerCircle.r*Joystick.jscale*math.cos(Direction.south_west),game.middleY+Joystick.biggerCircle.r*Joystick.jscale*math.sin(Direction.south_west)
 		self.timer = self.timer - dt
-	elseif self.boolMoveAtIsClicked then
+	elseif self.boolMoveAtIsClicked  and self.wasInsideIsometricBox then
 		cursor.x,cursor.y = game.middleX,game.middleY
 		Player.SelectedCharacter.isChangingPlace = false
 		Player.SelectedCharacter.setCollider = true
 		Player.SelectedCharacter.base_v = Player.SelectedCharacter.current_velocity
-			self.boolMoveAtIsClicked = false
+		self.boolMoveAtIsClicked = false
 	end
 end
