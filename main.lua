@@ -1,5 +1,5 @@
 function love.load()
-	forZoomingIn = 3	--Is used for attributes of in game objects' like scaling
+	forZoomingIn = 1	--Is used for attributes of in game objects' like scaling
 				--& distances.
 				--multiplied beside game.scale,
 				--    because game.scale take care of the in game objects if
