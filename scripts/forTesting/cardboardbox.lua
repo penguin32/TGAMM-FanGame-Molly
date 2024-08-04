@@ -20,7 +20,9 @@ CardBoardBox.opaque = 1
 
 function CardBoardBox:new(x,y,scale)
 	self.scale = scale or game.scale
-	CardBoardBox.super.new(self,x,y,252,340,self.scale)--Put the original pixel size of the image, those values determine its image ratio.
+	CardBoardBox.super.new(self,x,y,252,340,self.scale)
+	--Put the original pixel size of the image, those values determine its image ratio.
+
 	self.heightCoordinate = self.y - self.skin:getHeight()*self.scale
 end
 
@@ -35,15 +37,16 @@ function CardBoardBox:draw()
 	end
 end
 
-function CardBoardBox:update()--Player) --opaqueness for the player only
-			local yt = Player.SelectedCharacter.y+Player.SelectedCharacter.feetOffsetY - Player.SelectedCharacter.feetr*math.sin(1.0472)--isometric, same as humanColliderFunctions
+function CardBoardBox:update()	-- Player --opaqueness for the player only
+			local yt = Player.SelectedCharacter.y+Player.SelectedCharacter.feetOffsetY - Player.SelectedCharacter.feetr*math.sin(1.0472)
+		--isometric, same as humanColliderFunctions
 			local blsx = self.x - ((yt - self.y)/self.ml)
 			local brsx = self.x - ((yt - self.y)/self.mr)
 			if Player.SelectedCharacter.x+Player.SelectedCharacter.feetOffsetX > self.x2 and Player.SelectedCharacter.x+Player.SelectedCharacter.feetOffsetX < self.x3 and Player.SelectedCharacter.x+Player.SelectedCharacter.feetOffsetX > blsx and Player.SelectedCharacter.x+Player.SelectedCharacter.feetOffsetX < brsx and Player.SelectedCharacter.y+Player.SelectedCharacter.feetOffsetY  > self.heightCoordinate and Player.SelectedCharacter.y+Player.SelectedCharacter.feetOffsetY < self.y then
 				self.opaque = 1--0.5
 			else
 				self.opaque = 1
-			end-- This block works, but if Player funcs become independent,
+			end -- This block works, but if Player funcs become independent,
 			-- sorting drawing is gonna be a Hell to solve.
 	-- Find another way, without having to set the player:update/draw independent
 	-- from the Environment.objects...

@@ -39,6 +39,7 @@ function love.touchreleased(id,x,y)
 		JoystickR:usableModeOnRelease(JoystickR.mode)
 	end
 
+	JoystickR.drawOutsideOnly = false
 	touches[id] = nil
 end
 
@@ -148,8 +149,9 @@ function Joystick:draw()
 end
 
 
-JoystickR = { biggerCircle={}, circle={}, d=0, jx=0, jy=0, jd=0, jcos=0, jsin=0, jscale=6, discreteRadian=0, drawModeBool=false, mode="none" }
+JoystickR = { biggerCircle={}, circle={}, d=0, jx=0, jy=0, jd=0, jcos=0, jsin=0, jscale=6, discreteRadian=0, drawModeBool=false, mode="none", drawOutsideOnly=false }
 	-- mode="none"      mode, selecting, quiting, saving progress... mode aka options
+	-- drawOutsideOnly	, only draw a function if joystickR.[x/y] is outside boundary.
 
 JoystickR.biggerCircle = {
 	x=window.width*(3.5/4),
@@ -161,6 +163,7 @@ JoystickR.circle = {
 	x=window.width*(3.5/4),
 	y=window.height*(3/4),
 	r=114*game.scale/forZoomingIn
+
 }
 
 JoystickR.cursor = {
@@ -192,7 +195,7 @@ function JoystickR:update()
 			self.discreteRadian = Direction.DiscreteNumber(Direction.GetRadian(game.middleX,game.middleY,self.cursor.x,self.cursor.y))
 			self:selectingMode(self.discreteRadian)
 			self.drawModeBool = true
-
+			self.drawOutsideOnly = true
 		end
     end
 end
@@ -205,25 +208,28 @@ function JoystickR:draw()
 	love.graphics.setColor(0,1,0)
 	love.graphics.setColor(255,255,255)
 
-	love.graphics.setColor(0,1,0.26)
-	love.graphics.circle("line",self.cursor.x,self.cursor.y,25*game.scale)
-	love.graphics.setColor(255,255,255)
-	self:drawMode(self.drawModeBool)
+	
+	self:drawMode(self.drawModeBool,self.drawOutsideOnly)
 end
 
 local colorInd = 1	 -- Color Indication that selectingMode function works
-function JoystickR:drawMode(drawMode)
-		         -- Testing if Direction.Discrete returns are correct
-	local aroundThisCircumference = 550*game.scale/forZoomingIn
-	love.graphics.setColor(0,1,0.26)
-	love.graphics.circle("line",game.middleX,game.middleY,aroundThisCircumference)
-	love.graphics.setColor(1,1,1)
-
-
-	if drawMode == true then
-		love.graphics.setColor(0.21*colorInd,0.15*colorInd,0.11*colorInd)
-		love.graphics.circle("fill",game.middleX+aroundThisCircumference*math.cos(self.discreteRadian),game.middleY+aroundThisCircumference*math.sin(self.discreteRadian),40*game.scale)
+function JoystickR:drawMode(drawMode,ifTouched)
+	if ifTouched == true then
+		love.graphics.setColor(0,1,0.26)
+		love.graphics.circle("line",self.cursor.x,self.cursor.y,25*game.scale/forZoomingIn)
+		love.graphics.setColor(255,255,255)
+	
+		         	-- Testing if Direction.Discrete returns are correct
+		local aroundThisCircumference = 550*game.scale/forZoomingIn
+		love.graphics.setColor(0,1,0.26)
+		love.graphics.circle("line",game.middleX,game.middleY,aroundThisCircumference)
 		love.graphics.setColor(1,1,1)
+	
+		if drawMode == true then -- For testing, simulating options pop out for right joystick.
+			love.graphics.setColor(0.21*colorInd,0.15*colorInd,0.11*colorInd)
+			love.graphics.circle("fill",game.middleX+aroundThisCircumference*math.cos(self.discreteRadian),game.middleY+aroundThisCircumference*math.sin(self.discreteRadian),100*game.scale/forZoomingIn)
+			love.graphics.setColor(1,1,1)
+		end
 	end
 end
 

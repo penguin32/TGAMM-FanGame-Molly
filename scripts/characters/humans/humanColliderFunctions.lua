@@ -22,9 +22,11 @@ end
 
 -- Let's see the colliders of the characters
 function HumanColliderFunctions:DrawSelfColliders()
-	love.graphics.setColor(0,255,0)
-	love.graphics.circle("line", self.x+self.feetOffsetX, self.y+self.feetOffsetY,self.feetr)
-	love.graphics.setColor(255,255,255)
+	if showOutlines == true then
+		love.graphics.setColor(0,255,0)
+		love.graphics.circle("line", self.x+self.feetOffsetX, self.y+self.feetOffsetY,self.feetr)
+		love.graphics.setColor(255,255,255)
+	end
 end
 
 

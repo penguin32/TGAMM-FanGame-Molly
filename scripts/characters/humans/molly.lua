@@ -52,11 +52,12 @@ function Molly:draw()
 		self:PosesDraw(self.skin.torso,nil,nil,nil,self.scale)
 		self:PosesDraw(self.skin.head,nil,nil,nil,self.scale)
 	end
-
+	if showOutlines == true then
 	-- Below to view movement range. dai and damv specifically.
-	love.graphics.setColor(0,0,0)
-	love.graphics.circle("line",game.middleX,game.middleY,self.base_dai)
-	love.graphics.circle("line",game.middleX,game.middleY,self.base_damv)
-	love.graphics.setColor(1,1,1)
+		love.graphics.setColor(0,0,0)
+		love.graphics.circle("line",game.middleX,game.middleY,self.base_dai)
+		love.graphics.circle("line",game.middleX,game.middleY,self.base_damv)
+		love.graphics.setColor(1,1,1)
+	end
 
 end

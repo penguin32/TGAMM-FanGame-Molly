@@ -46,10 +46,12 @@ function IsometricBeta:update(dt)--Exist to stay consistent with Environment.upd
 end
 
 function IsometricBeta:draw()
+	if showOutlines == true then
 	--just for testing... see interactable shape
-	love.graphics.setColor(1,0,0)
-	love.graphics.polygon("line",self.x2,self.y2,self.x,self.y,self.x3,self.y3,self.x4,self.y4)
-	love.graphics.circle("line", self.xMiddle,self.yMiddle,20*game.scale)
-	love.graphics.setColor(255,255,255)
+		love.graphics.setColor(1,0,0)
+		love.graphics.polygon("line",self.x2,self.y2,self.x,self.y,self.x3,self.y3,self.x4,self.y4)
+		love.graphics.circle("line", self.xMiddle,self.yMiddle,20*game.scale)
+		love.graphics.setColor(255,255,255)
+	end
 end
 

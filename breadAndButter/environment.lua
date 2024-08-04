@@ -11,7 +11,7 @@ function Environment.load(level)
 	Environment.bool = 1
 	Environment.touchUpdateUI = false
 	Environment.usingAndroid = false
-	Environment.DevChangeOS = false   -- Changed by developer only, set "true" for Android,
+	Environment.DevChangeOS = true   -- Changed by developer only, set "true" for Android,
 					  -- "false" for Desktop use,
 end					  --  also the player.lua has couple more steps to
 					  --  follow for this.
@@ -83,6 +83,7 @@ function Environment.draw()
 			else
 				v:draw()
 			end
+		-- see	showOutlines at main.lua 
 		--	love.graphics.setColor(0,255,0)		--GREEN Dots  forTesting
 		--	love.graphics.circle("fill",v.x,v.y,10)	--These represents object's
 								--	xy positions.
@@ -92,8 +93,7 @@ function Environment.draw()
 
 	local selectedLevel = Environment.level
 	if selectedLevel ~= 0 then
-		local who = Player.Who
-		if  who == "Molly" then	-- November 6 2022 > Test here!
+		if  Player.Who == "Molly" and showOutlines == true then
 			love.graphics.setColor(0,255,0)
 			love.graphics.print("CharPos: "..Player.SelectedCharacter.x,game.cartX+100*game.scale/forZoomingIn,game.cartY+120*game.scale/forZoomingIn)
 			love.graphics.print("CharPos: "..Player.SelectedCharacter.y,game.cartX+100*game.scale/forZoomingIn,game.cartY+160*game.scale/forZoomingIn)
@@ -105,7 +105,7 @@ function Environment.draw()
 		end
 		if not(cursor.x == game.middleX and cursor.y == game.middleY)then
 			love.graphics.setColor(255,255,0)
-			love.graphics.circle("fill",cursor.x,cursor.y,7.5*game.scale)
+			love.graphics.circle("fill",cursor.x,cursor.y,25*game.scale/forZoomingIn)
 			love.graphics.setColor(255,255,255)
 		end -- Functionality visible on Desktop only,
 	-- Android left joystick is not working as intended, but you can leave it as it is. :(

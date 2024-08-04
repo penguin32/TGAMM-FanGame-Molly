@@ -12,6 +12,9 @@ function Rectangle:update(dt)--Exist to stay consistent with Environment.update(
 end
 
 function Rectangle:draw()
+
+	if showOutlines == true then
 	-- Just for testing... see collision shape.
-	love.graphics.rectangle("line", self.x, self.y, self.w, self.h)
+		love.graphics.rectangle("line", self.x, self.y, self.w, self.h)
+	end
 end

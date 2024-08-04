@@ -1,5 +1,8 @@
 function love.load()
-	forZoomingIn = 1	--Is used for attributes of in game objects' like scaling
+	showOutlines = false	--Show shape outlines, colliders, interact and text attributes.
+				-- Environment.level(-1) will have a problem for shapes not
+				-- being visible, be mindful of that.
+	forZoomingIn = 2	--Is used for attributes of in game objects' like scaling
 				--& distances.
 				--multiplied beside game.scale,
 				--    because game.scale take care of the in game objects if
@@ -137,12 +140,14 @@ function love.draw()
 	love.graphics.setBackgroundColor(255,255,255)
 	love.graphics.setColor(0,0,0)
 
-	love.graphics.setColor(0.5,0,0)
-	love.graphics.rectangle("fill",game.middleX,game.middleY,10,10)
-		-- tells where is game.middleX and middleY
-	love.graphics.rectangle("fill",game.cartX,game.cartY,10,10)
-		-- tells where is game.cartX and cartY
-	love.graphics.setColor(0,0,0)
+	if showOutlines == true then
+		love.graphics.setColor(0.5,0,0)
+		love.graphics.rectangle("fill",game.middleX,game.middleY,10,10)
+	-- tells where is game.middleX and middleY
+		love.graphics.rectangle("fill",game.cartX,game.cartY,10,10)
+	-- tells where is game.cartX and cartY
+		love.graphics.setColor(0,0,0)
+	end
 
 		-- Four rectangles below acts as borders.
 	love.graphics.rectangle("fill",0,0,game.cartX,window.width)

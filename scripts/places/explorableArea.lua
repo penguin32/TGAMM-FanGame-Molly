@@ -27,10 +27,11 @@ function ExplorableArea:update(dt)--Exist to stay consistent with Environment.up
 end
 
 function ExplorableArea:draw()
-
+	if showOutlines == true then
 	--To see the outline of the walkable area as an example, in level 1
 	--Not really needed and they're off centered due to varying object's width,height.
-	love.graphics.setColor(0,0,1)
-	love.graphics.polygon("line",self.x2,self.y2,self.x,self.y,self.x3,self.y3,self.x4,self.y4)
-	love.graphics.setColor(1,1,1,1)
+		love.graphics.setColor(0,0,1)
+		love.graphics.polygon("line",self.x2,self.y2,self.x,self.y,self.x3,self.y3,self.x4,self.y4)
+		love.graphics.setColor(1,1,1,1)
+	end
 end
