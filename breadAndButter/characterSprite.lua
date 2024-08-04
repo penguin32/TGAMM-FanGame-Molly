@@ -74,13 +74,13 @@ function CharacterSprite:update(dt,animal_x,animal_y,food_x,food_y)
 -- July 30 2024 > this line below here is only for player	
 	self.dir_r = Direction.GetRadian(self.x,self.y,Player.evilCursorX,Player.evilCursorY)
 	if self.boolCountingWhere == true then
-		self.currentFrame = self.currentFrame + 10*dt
+		self.currentFrame = self.currentFrame + self.spriteVelocity/3*dt
 		if self.currentFrame >= 4 then
 			self.boolCountingWhere = false
 			self.currentFrame = 3.9
 		end
 	else
-		self.currentFrame = self.currentFrame - 10*dt
+		self.currentFrame = self.currentFrame - self.spriteVelocity/3*dt
 		if self.currentFrame < 1 then
 			self.boolCountingWhere = true
 			self.currentFrame = 1
