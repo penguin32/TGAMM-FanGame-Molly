@@ -40,7 +40,7 @@ function love.load()
 		 I should review that function, but for now everything is working as intended
 ]]--
 
-	cursor = { x = 0, y = 0 }	--"Mouse Point tool like" for the game.
+	cursor = { x = 0, y = 0, visible = true }	--"Mouse Point tool like" for the game.
 	cursor.x,cursor.y = game.middleX,game.middleY
 	font = love.graphics.newFont(34*(game.scale/forZoomingIn))
 	love.mouse.setPosition(game.middleX,game.middleY)

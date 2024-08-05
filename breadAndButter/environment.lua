@@ -103,12 +103,13 @@ function Environment.draw()
 			love.graphics.print("char.base_y: "..Player.SelectedCharacter.base_y,game.cartX+800*game.scale/forZoomingIn,game.cartY+160*game.scale/forZoomingIn)
 			love.graphics.print("Player.Keyboard.z: "..tostring(Player.Keyboard.z),game.cartX+800*game.scale/forZoomingIn,game.cartY+200*game.scale/forZoomingIn)
 		end
-		if not(cursor.x == game.middleX and cursor.y == game.middleY)then
-			love.graphics.setColor(255,255,0)
-			love.graphics.circle("fill",cursor.x,cursor.y,25*game.scale/forZoomingIn)
-			love.graphics.setColor(255,255,255)
-		end -- Functionality visible on Desktop only,
-	-- Android left joystick is not working as intended, but you can leave it as it is. :(
+		if cursor.visible == true then
+			if not(cursor.x == game.middleX and cursor.y == game.middleY)then
+				love.graphics.setColor(255,255,0)
+				love.graphics.circle("fill",cursor.x,cursor.y,25*game.scale/forZoomingIn)
+				love.graphics.setColor(255,255,255)
+			end -- Functionality visible on Desktop only,
+		end
 	end
 
 	local totalUI = #Environment.ui -- Feels like these should be running under push()

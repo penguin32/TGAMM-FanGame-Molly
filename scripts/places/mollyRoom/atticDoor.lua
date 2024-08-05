@@ -58,10 +58,10 @@ function AtticDoor:MoveAt(dt)
 		Player.SelectedCharacter.isChangingPlace = true
 		Player.SelectedCharacter.setCollider = false
 		Player.SelectedCharacter.base_v = Player.SelectedCharacter.temporary_velocity
-	cursor.x,cursor.y = game.middleX+Joystick.biggerCircle.r*Joystick.jscale*math.cos(Direction.south_west),game.middleY+Joystick.biggerCircle.r*Joystick.jscale*math.sin(Direction.south_west)
+	cursor.x,cursor.y,cursor.visible = game.middleX+Joystick.biggerCircle.r*Joystick.jscale*math.cos(Direction.south_west),game.middleY+Joystick.biggerCircle.r*Joystick.jscale*math.sin(Direction.south_west),false
 		self.timer = self.timer - dt
 	elseif self.boolMoveAtIsClicked  and self.wasInsideIsometricBox then
-		cursor.x,cursor.y = game.middleX,game.middleY
+		cursor.x,cursor.y,cursor.visible = game.middleX,game.middleY,true
 		Player.SelectedCharacter.isChangingPlace = false
 		Player.SelectedCharacter.setCollider = true
 		Player.SelectedCharacter.base_v = Player.SelectedCharacter.current_velocity
