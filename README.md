@@ -32,3 +32,5 @@ Objects that you don't want to be scaled along when zooming in, like UI(main men
 November 4 2022  remind myself that "circle" should be an ellipse in this isometric.
                   Do I have to though?
 
++ Re pushing  because August 6 2024 has unverified commit.
+
