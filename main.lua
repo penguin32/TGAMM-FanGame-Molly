@@ -1,4 +1,5 @@
-function love.load() --just a line to verify my github commit
+function love.load()
+--	love.window.setFullscreen(true)
 	showOutlines = true	--Show shape outlines, colliders, interact and text attributes.
 				-- Environment.level(-1) will have a problem for shapes not
 				-- being visible, be mindful of that.
@@ -82,6 +83,20 @@ function love.load() --just a line to verify my github commit
 end
 
 function love.update(dt)
+       	window.newWidth = love.graphics.getWidth()
+        window.newHeight = love.graphics.getHeight()
+        if window.newWidth ~= window.width or window.newHeight ~= window.height then
+        game = { width = 2048, height = 1427, cartX = 0, cartY = 0 }
+                window.width = love.graphics.getWidth()
+                window.height = love.graphics.getHeight()
+                game.scale = getScale(window.width,window.height)
+                game.cartX,game.cartY = cartScale(game.cartX,game.cartY)
+                game.middleX = game.cartX + game.width*(game.scale/forZoomingIn)/2
+                game.middleY = game.cartY + game.height*(game.scale/forZoomingIn)/2
+                font = love.graphics.newFont(34*(game.scale/forZoomingIn)) 
+        end
+
+
         if Environment.touchUpdateUI == true then  --It tells love.mousepressed(mx,my)
 					  --   to use Touches table(forAndroid) 
 					  --   ...mousepressed(t[1],1[2])...
