@@ -1,4 +1,4 @@
-function love.load()
+function love.load() --just a line to verify my github commit"
 	showOutlines = true	--Show shape outlines, colliders, interact and text attributes.
 				-- Environment.level(-1) will have a problem for shapes not
 				-- being visible, be mindful of that.
