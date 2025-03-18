@@ -1,5 +1,5 @@
 function love.load()
-	showOutlines = false	--Show shape outlines, colliders, interact and text attributes.
+	showOutlines = true	--Show shape outlines, colliders, interact and text attributes.
 				-- Environment.level(-1) will have a problem for shapes not
 				-- being visible, be mindful of that.
 	forZoomingIn = 2	--Is used for attributes of in game objects' like scaling
