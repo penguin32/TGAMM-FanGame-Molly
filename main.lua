@@ -83,20 +83,8 @@ function love.load()
 end
 
 function love.update(dt)
-       	window.newWidth = love.graphics.getWidth()
-        window.newHeight = love.graphics.getHeight()
-        if window.newWidth ~= window.width or window.newHeight ~= window.height then
-        game = { width = 2048, height = 1427, cartX = 0, cartY = 0 }
-                window.width = love.graphics.getWidth()
-                window.height = love.graphics.getHeight()
-                game.scale = getScale(window.width,window.height)
-                game.cartX,game.cartY = cartScale(game.cartX,game.cartY)
-                game.middleX = game.cartX + game.width*(game.scale/forZoomingIn)/2
-                game.middleY = game.cartY + game.height*(game.scale/forZoomingIn)/2
-                font = love.graphics.newFont(34*(game.scale/forZoomingIn)) 
-        end
-
-
+	updateEveryScale()
+       
         if Environment.touchUpdateUI == true then  --It tells love.mousepressed(mx,my)
 					  --   to use Touches table(forAndroid) 
 					  --   ...mousepressed(t[1],1[2])...
@@ -186,4 +174,19 @@ end
 function cartScale(x,y)
 	local sx,sy = window.width/game.width, window.height/game.height
 	if sx < sy then return x,y+(window.height - game.height*(game.scale/forZoomingIn))/2 else return x+(window.width - game.width*(game.scale/forZoomingIn))/2,y end
+end
+
+function updateEveryScale()
+        window.newWidth = love.graphics.getWidth()
+        window.newHeight = love.graphics.getHeight()
+        if window.newWidth ~= window.width or window.newHeight ~= window.height then
+        game = { width = 2048, height = 1427, cartX = 0, cartY = 0 }
+                window.width = love.graphics.getWidth()
+                window.height = love.graphics.getHeight()
+                game.scale = getScale(window.width,window.height)
+                game.cartX,game.cartY = cartScale(game.cartX,game.cartY)
+                game.middleX = game.cartX + game.width*(game.scale/forZoomingIn)/2
+                game.middleY = game.cartY + game.height*(game.scale/forZoomingIn)/2
+                font = love.graphics.newFont(34*(game.scale/forZoomingIn)) 
+        end
 end
